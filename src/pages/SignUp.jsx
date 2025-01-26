@@ -202,8 +202,6 @@ const SignUp = () => {
                         className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 mt-3 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                         {...register("userType", {
                           required: "User type is required",
-                          validate: (value) =>
-                            value !== "Admin" || "You cannot register as Admin directly!",
                         })}
                       >
                         <option value="">Select user type</option>

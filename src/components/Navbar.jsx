@@ -6,9 +6,13 @@ import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
 import useAdmin from "../hooks/useAdmin";
 import useDeliveryMan from "../hooks/useDeliveryMan";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useState } from "react";
 
 const Navbar = () => {
   const [isAdmin] = useAdmin();
+  const [parcels, setParcels] = useState([]);
   const [isDelivery] = useDeliveryMan();
   const { user, signOutUser } = useAuth();
   const handleSignOut = () => {
@@ -28,6 +32,16 @@ const Navbar = () => {
         });
       });
   };
+  console.log(parcels);
+  const {data: allParcel = [], refetch} = useQuery({
+    queryKey: ["parcels"],
+    queryFn: async () => {
+      const response = await useAxiosSecure.get("/bookAParcel");
+      setParcels(response.data);
+      return response.data;
+    },
+  })
+  refetch();
   return (
     <nav className="bg-base-200 shadow-lg">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
@@ -46,8 +60,9 @@ const Navbar = () => {
         {/* Notification Icon and Profile/Login */}
         <div className="flex items-center gap-4">
           {/* Notification Icon */}
-          <button className="btn btn-ghost btn-circle">
-            <FiBell className="text-2xl text-neutral" />
+          <button className="btn relative btn-ghost btn-circle">
+            <FiBell className="text-3xl text-neutral" />
+            <span className="absolute right-0 top-0 bg-purple-800 text-white px-1 rounded-full">{allParcel.length}</span>
           </button>
 
           {user ? (
@@ -90,9 +105,11 @@ const Navbar = () => {
                     </p>
                   </div>
                   <div className="divider"></div>
-                  { user && isAdmin && (<li className="text-xl"><Link to='/dashboard/statistics'><MdDashboardCustomize /> Dashboard</Link></li>)}
-                  { user && !isAdmin && !isDelivery && (<li className="text-xl"><Link to='/dashboard/parcel'><MdDashboardCustomize /> Dashboard</Link></li>)}
-                  { isDelivery && !isAdmin && (<li className="text-xl"><Link to='/dashboard/myDeliveryList'><MdDashboardCustomize /> Dashboard</Link></li>)}
+                  { user && isAdmin && (<li className="text-xl"><Link to='/dashboard/allParcel'><MdDashboardCustomize /> Dashboard</Link></li>)}
+
+                  { user && !isAdmin && !isDelivery && (<li className="text-xl"><Link to='/dashboard/myParcel'><MdDashboardCustomize /> Dashboard</Link></li>)}
+
+                  { isDelivery && !isAdmin && !user && (<li className="text-xl"><Link to='/dashboard/myDeliveryList'><MdDashboardCustomize /> Dashboard</Link></li>)}
                   <div className="lg:p-4 md:p-2 p-1 md:mx-8 mt-2">
                     <button
                       onClick={handleSignOut}

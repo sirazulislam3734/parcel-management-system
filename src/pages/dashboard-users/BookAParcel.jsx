@@ -24,12 +24,8 @@ const BookAParcel = () => {
 
   const onSubmit = async (data) => {
     console.log(data);
-    const calculateApproxDeliveryDate = () => {
-        const date = new Date(data.deliveryDate);
-        date.setDate(date.getDate() + 3); // Add 3 days for delivery
-        return date.toISOString().split("T")[0]; // Return as YYYY-MM-DD
-      };
-    const bookingData = { ...data, ApproxDeliveryDate: calculateApproxDeliveryDate() , status: "pending", price: price, bookingDate: new Date().toLocaleDateString(),  };
+    
+    const bookingData = { ...data, status: "pending", price: price, bookingDate: new Date().toLocaleDateString(),  };
     try {
       const res = await axiosPublic.post("/bookAParcel", bookingData);
       if (res.data.insertedId) {

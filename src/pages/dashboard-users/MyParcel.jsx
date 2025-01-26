@@ -131,12 +131,12 @@ const MyParcel = () => {
               <tr key={parcel._id}>
                 <td className="font-bold">{parcel.parcelType}</td>
                 <td>{parcel.deliveryDate}</td>
-                <td>{parcel.ApproxDeliveryDate || "Not Assigned"}</td>
+                <td>{parcel.approximateDeliveryDate || "Not Assigned"}</td>
                 <td>{parcel.bookingDate}</td>
                 <td>{parcel.deliveryMenId || "Not Assigned"}</td>
                 <td>
                   <span
-                    className={`badge ${
+                    className={`badge text-nowrap w-full h-full ${
                       parcel.status === "pending"
                         ? "badge-warning"
                         : parcel.status === "on the way"
