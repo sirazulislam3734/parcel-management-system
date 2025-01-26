@@ -4,8 +4,12 @@ import { MdDashboardCustomize } from "react-icons/md";
 import img from "../assets/download (2).jpeg";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
+import useAdmin from "../hooks/useAdmin";
+import useDeliveryMan from "../hooks/useDeliveryMan";
 
 const Navbar = () => {
+  const [isAdmin] = useAdmin();
+  const [isDelivery] = useDeliveryMan();
   const { user, signOutUser } = useAuth();
   const handleSignOut = () => {
     signOutUser()
@@ -86,7 +90,9 @@ const Navbar = () => {
                     </p>
                   </div>
                   <div className="divider"></div>
-                  <li className="text-xl"><Link to='/dashboard/parcel'><MdDashboardCustomize /> Dashboard</Link></li>
+                  { user && isAdmin && (<li className="text-xl"><Link to='/dashboard/statistics'><MdDashboardCustomize /> Dashboard</Link></li>)}
+                  { user && !isAdmin && !isDelivery && (<li className="text-xl"><Link to='/dashboard/parcel'><MdDashboardCustomize /> Dashboard</Link></li>)}
+                  { isDelivery && !isAdmin && (<li className="text-xl"><Link to='/dashboard/myDeliveryList'><MdDashboardCustomize /> Dashboard</Link></li>)}
                   <div className="lg:p-4 md:p-2 p-1 md:mx-8 mt-2">
                     <button
                       onClick={handleSignOut}

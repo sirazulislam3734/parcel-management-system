@@ -1,12 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
+// /* eslint-disable react/no-unescaped-entities */
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { AiOutlineSend } from "react-icons/ai";
 import useAuth from "../../hooks/useAuth";
 import SectionTitle from "../../components/SectionTitle";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const BookAParcel = () => {
+    const axiosPublic = useAxiosPublic();
   const { user } = useAuth();
   const [price, setPrice] = useState(0);
   const {
@@ -18,10 +20,10 @@ const BookAParcel = () => {
 
   const onSubmit = async (data) => {
     console.log(data);
-    const bookingData = { ...data, status: "pending", price };
+    const bookingData = { ...data, status: "pending", price: price };
     try {
-      const response = await axios.post("https://your-backend-api-url/book-parcel", bookingData);
-      if (response.data.success) {
+      const res = await axiosPublic.post("/bookAParcel", bookingData);
+      if (res.data.insertedId) {
         alert("Parcel booked successfully!");
       } else {
         alert("Failed to book parcel.");
@@ -62,6 +64,7 @@ const BookAParcel = () => {
             type="text"
             className="input input-bordered w-full bg-gray-100"
             value={user?.displayName}
+            readOnly
             {...register("name")}
           />
         </div>
@@ -73,6 +76,7 @@ const BookAParcel = () => {
             type="email"
             className="input input-bordered w-full bg-gray-100"
             value={user?.email}
+            readOnly
             {...register("email")}
           />
         </div>
@@ -225,7 +229,6 @@ const BookAParcel = () => {
             type="text"
             className="input input-bordered w-full bg-gray-100"
             value={`${price} Tk`}
-            {...register("price")}
           />
         </div>
 
@@ -245,3 +248,4 @@ const BookAParcel = () => {
 };
 
 export default BookAParcel;
+
