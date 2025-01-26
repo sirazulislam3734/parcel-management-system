@@ -3,13 +3,15 @@ import { FaHome } from "react-icons/fa";
 import { BiSolidFoodMenu } from "react-icons/bi";
 import { TfiMenuAlt } from "react-icons/tfi";
 import { CgProfile } from "react-icons/cg";
+import useAdmin from "../hooks/useAdmin";
+import useDeliveryMan from "../hooks/useDeliveryMan";
 
 const Dashboard = () => {
-
-    const isAdmin = true;
+    const [isAdmin] = useAdmin();
+    const [isDelivery] = useDeliveryMan();
   return (
     <div className="container mx-auto">
-      <div className="flex flex-col md:flex-row h-screen">
+      <div className="flex flex-col md:flex-row ">
         {/**Dashboard side bar */}
         <div className="w-full md:w-64 bg-blue-600 text-white flex flex-col justify-between">
           <div>
@@ -19,7 +21,7 @@ const Dashboard = () => {
             </div>
 
             {/* Navigation user */}
-            <ul className="space-y-2 menu font-semibold">
+            {/* <ul className="space-y-2 menu font-semibold">
               <li>
                 <NavLink to="/dashboard/parcel">
                   <BiSolidFoodMenu size={18} /> Book a Parcel
@@ -43,11 +45,11 @@ const Dashboard = () => {
                   <FaHome size={18} /> Home
                 </NavLink>
               </li>
-            </ul>
+            </ul> */}
 
             {/* Navigation Admin */}
             {
-                isAdmin && (<ul className="space-y-2 menu font-semibold">
+                isAdmin ? (<ul className="space-y-2 menu font-semibold">
                     <li>
                       <NavLink to="/dashboard/statistics">
                         <BiSolidFoodMenu size={18} /> Statistics Page
@@ -71,12 +73,7 @@ const Dashboard = () => {
                         <FaHome size={18} /> Home
                       </NavLink>
                     </li>
-                  </ul>)
-            }
-
-            {/* Navigation Delivery */}
-            {/* {
-                isDelivery && (
+                  </ul>) : isDelivery ? (
                     <ul className="space-y-2 menu font-semibold">
               <li>
                 <NavLink to="/dashboard/myDeliveryList">
@@ -97,8 +94,33 @@ const Dashboard = () => {
                 </NavLink>
               </li>
             </ul>
-                )
-            } */}
+                ) : (<ul className="space-y-2 menu font-semibold">
+              <li>
+                <NavLink to="/dashboard/parcel">
+                  <BiSolidFoodMenu size={18} /> Book a Parcel
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/myParcel">
+                  <TfiMenuAlt size={18} /> My Parcels
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/myProfile">
+                  <CgProfile size={18} /> My Profile
+                </NavLink>
+              </li>
+
+              <div className="divider"></div>
+
+              <li>
+                <NavLink to="/">
+                  <FaHome size={18} /> Home
+                </NavLink>
+              </li>
+            </ul>)
+            }
+            
           </div>
 
           {/* User Profile */}
@@ -110,7 +132,7 @@ const Dashboard = () => {
         </div>
         </div>
         {/**Dashboard Content */}
-        <div className="flex-1 lg:p-16 md:p-8 p-4 bg-slate-100">
+        <div className="flex-1 lg:p-10 md:p-8 p-4 bg-slate-100">
           <Outlet />
         </div>
       </div>

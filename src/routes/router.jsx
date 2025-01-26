@@ -12,6 +12,7 @@ import MyDeliveryList from "../pages/dashboard-Delivery-man/MyDeliveryList";
 import MyReviews from "../pages/dashboard-Delivery-man/MyReviews";
 import MyParcel from "../pages/dashboard-users/MyParcel";
 import MyProfile from "../pages/dashboard-users/MyProfile";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
     {
@@ -51,15 +52,15 @@ export const router = createBrowserRouter([
         // Admin Routes
         {
           path: 'statistics',
-          element: <StatisticsPage />
+          element: <AdminRoute><StatisticsPage /></AdminRoute>
         },
         {
           path: 'allParcel',
-          element: <AllParcels />
+          element: <AdminRoute><AllParcels /></AdminRoute>
         },
         {
           path: 'usersAndDelivery',
-          element: <UserAndDelivery />
+          element: <AdminRoute><UserAndDelivery /></AdminRoute>
         },
         // Delivery Routes
         {

@@ -16,7 +16,7 @@ const UserAndDelivery = () => {
     },
   });
 
-  const handleMakeAdmin = (user) => {
+  const handleMakeDeliveryMan = (user) => {
     console.log(user);
     axiosSecure.patch(`/users/deliveryMan/${user._id}`)
     .then(res => {
@@ -63,7 +63,7 @@ const UserAndDelivery = () => {
         subTitle="---How many??---"
         heading="MANAGE ALL USERS"
       ></SectionTitle>
-      <div className="overflow-x-auto overflow-hidden">
+      <div className="overflow-x-auto ">
         <table className="table table-zebra w-full">
           {/* head */}
           <thead>
@@ -92,7 +92,7 @@ const UserAndDelivery = () => {
                     </span>
                   ) : (
                     <button
-                      onClick={() => handleMakeAdmin(user)}
+                      onClick={() => handleMakeDeliveryMan(user)}
                       className="p-3 rounded-xl text-white bg-yellow-500"
                     >
                       <HiUserGroup size={25} />
