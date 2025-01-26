@@ -18,6 +18,17 @@ const UserAndDelivery = () => {
 
   const handleMakeAdmin = (user) => {
     console.log(user);
+    axiosSecure.patch(`/users/deliveryMan/${user._id}`)
+    .then(res => {
+        if(res.data.modifiedCount > 0){
+            refetch();
+            Swal.fire({
+                title: "Good job!",
+                text: `${user.name} is an Delivery Man Now!`,
+                icon: "success"
+              });
+        }
+    })
   };
 
   const handleRemoveUser = (user) => {
@@ -45,7 +56,7 @@ const UserAndDelivery = () => {
       }
     });
   };
-  console.log(users);
+
   return (
     <div>
       <SectionTitle
