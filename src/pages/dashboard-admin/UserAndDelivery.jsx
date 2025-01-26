@@ -17,7 +17,6 @@ const UserAndDelivery = () => {
   });
 
   const handleMakeDeliveryMan = (user) => {
-    console.log(user);
     axiosSecure.patch(`/users/deliveryMan/${user._id}`)
     .then(res => {
         if(res.data.modifiedCount > 0){
@@ -32,7 +31,6 @@ const UserAndDelivery = () => {
   };
 
   const handleRemoveUser = (user) => {
-    console.log(user);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
