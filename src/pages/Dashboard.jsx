@@ -19,35 +19,8 @@ const Dashboard = () => {
             <div className="flex items-center p-4 text-2xl font-bold">
               <FaHome className="mr-2" /> Dashboard
             </div>
-
-            {/* Navigation user */}
-            {/* <ul className="space-y-2 menu font-semibold">
-              <li>
-                <NavLink to="/dashboard/parcel">
-                  <BiSolidFoodMenu size={18} /> Book a Parcel
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/myParcel">
-                  <TfiMenuAlt size={18} /> My Parcels
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/dashboard/myProfile">
-                  <CgProfile size={18} /> My Profile
-                </NavLink>
-              </li>
-
-              <div className="divider"></div>
-
-              <li>
-                <NavLink to="/">
-                  <FaHome size={18} /> Home
-                </NavLink>
-              </li>
-            </ul> */}
-
             {/* Navigation Admin */}
+            <div className="lg:flex flex-col items-center justify-center">
             {
                 isAdmin ? (<ul className="space-y-2 menu font-semibold">
                     <li>
@@ -120,6 +93,7 @@ const Dashboard = () => {
               </li>
             </ul>)
             }
+            </div>
             
           </div>
 

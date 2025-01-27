@@ -5,21 +5,19 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useEffect, useState } from "react";
-// import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 
 const UpdateMyParcel = () => {
-  // const axiosPublic = useAxiosPublic();
-  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
   const params = useParams();
   const { user } = useAuth();
   const [price, setPrice] = useState(0);
-  const { data } = useQuery({
+  const { data: updateData } = useQuery({
     queryKey: ["parcels", params.id],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/bookAParcel/${params.id}`);
+      const res = await axiosPublic.get(`/bookAParcel/${params.id}`);
       return res.data;
     },
   });
@@ -32,7 +30,7 @@ const UpdateMyParcel = () => {
 
   const onSubmit = async (data) => {
     console.log(data);
-   const res = await axiosSecure.put(`/updateAParcel/${params.id}`, data)
+   const res = await axiosPublic.patch(`/updateAParcel/${updateData._id}`, data)
         console.log(res.data);
         if (res.data.modifiedCount > 0) {
             Swal.fire({
@@ -48,7 +46,7 @@ const UpdateMyParcel = () => {
             });
         }
 };
-
+console.log('data', updateData, 'id', params.id);
   const parcelWeight = watch("parcelWeight");
   useEffect(() => {
     if (parcelWeight <= 1) {
@@ -98,7 +96,7 @@ const UpdateMyParcel = () => {
             <input
               type="tel"
               className="input input-bordered w-full"
-              defaultValue={data?.phone}
+              defaultValue={updateData?.phone}
               {...register("phone", { required: true })}
             />
           </div>
@@ -109,7 +107,7 @@ const UpdateMyParcel = () => {
             <input
               type="text"
               className="input input-bordered w-full"
-              defaultValue={data?.parcelType}
+              defaultValue={updateData?.parcelType}
               {...register("parcelType", { required: true })}
             />
           </div>
@@ -120,7 +118,7 @@ const UpdateMyParcel = () => {
             <input
               type="number"
               className="input input-bordered w-full"
-              defaultValue={data?.parcelWeight}
+              defaultValue={updateData?.parcelWeight}
               {...register("parcelWeight", {
                 required: true,
                 valueAsNumber: true,
@@ -140,7 +138,7 @@ const UpdateMyParcel = () => {
             <input
               type="text"
               className="input input-bordered w-full"
-              defaultValue={data?.receiverName}
+              defaultValue={updateData?.receiverName}
               {...register("receiverName", { required: true })}
             />
           </div>
@@ -151,7 +149,7 @@ const UpdateMyParcel = () => {
             <input
               type="tel"
               className="input input-bordered w-full"
-              defaultValue={data?.receiverPhone}
+              defaultValue={updateData?.receiverPhone}
               {...register("receiverPhone", { required: true })}
             />
           </div>
@@ -162,7 +160,7 @@ const UpdateMyParcel = () => {
             <input
               type="text"
               className="input input-bordered w-full"
-              defaultValue={data?.deliveryAddress}
+              defaultValue={updateData?.deliveryAddress}
               {...register("deliveryAddress", { required: true })}
             />
           </div>
@@ -173,7 +171,7 @@ const UpdateMyParcel = () => {
             <input
               type="date"
               className="input input-bordered w-full"
-              defaultValue={data?.deliveryDate}
+              defaultValue={updateData?.deliveryDate}
               {...register("deliveryDate", { required: true })}
             />
           </div>
@@ -185,7 +183,7 @@ const UpdateMyParcel = () => {
               type="number"
               step="any"
               className="input input-bordered w-full"
-              defaultValue={data?.latitude}
+              defaultValue={updateData?.latitude}
               {...register("latitude", { required: true })}
             />
           </div>
@@ -197,7 +195,7 @@ const UpdateMyParcel = () => {
               type="number"
               step="any"
               className="input input-bordered w-full"
-              defaultValue={data?.longitude}
+              defaultValue={updateData?.longitude}
               {...register("longitude", { required: true })}
             />
           </div>
@@ -208,8 +206,8 @@ const UpdateMyParcel = () => {
             <input
               type="text"
               className="input input-bordered w-full bg-gray-100"
-              //   defaultValue={data?.price}
-              value={price}
+                defaultValue={updateData?.price}
+            //   value={price}
               {...register("price")}
             />
           </div>

@@ -8,7 +8,7 @@ const useDeliveryMan = () => {
   const { data: isDeliveryMan } = useQuery({
     queryKey: [user?.email, "isDeliveryMan"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users/deliveryMan/${user?.email}`);
+      const res = await axiosSecure.get(`/users/delivery/${user?.email}`);
       return res.data?.deliveryMan;
     },
   });

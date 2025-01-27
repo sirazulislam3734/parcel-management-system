@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import {
   AiOutlineEdit,
   AiOutlineDelete,
@@ -11,13 +10,15 @@ import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import noData from "../../assets/noData.json";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Lottie from "lottie-react";
 import SectionTitle from "../../components/SectionTitle";
+// import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const MyParcel = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+//   const axiosPublic = useAxiosPublic();
   const [parcels, setParcels] = useState([]);
   const [filterStatus, setFilterStatus] = useState("all");
   const navigate = useNavigate();
@@ -34,27 +35,27 @@ const MyParcel = () => {
   console.log(parcelsData);
 
   // Handle Cancel Parcel
-  const handleCancel = async (parcelId) => {
-    if (window.confirm("Are you sure you want to cancel this booking?")) {
-      try {
-        await axios.put(
-          `https://your-backend-api-url/cancel-parcel/${parcelId}`,
-          {
-            status: "canceled",
-          }
-        );
-        setParcels((prev) =>
-          prev.map((parcel) =>
-            parcel._id === parcelId ? { ...parcel, status: "canceled" } : parcel
-          )
-        );
-        alert("Booking canceled successfully.");
-      } catch (error) {
-        console.error(error);
-        alert("Failed to cancel the booking.");
-      }
-    }
-  };
+//   const handleCancel = async (parcelId) => {
+//     if (window.confirm("Are you sure you want to cancel this booking?")) {
+//       try {
+//         await axios.put(
+//           `https://your-backend-api-url/cancel-parcel/${parcelId}`,
+//           {
+//             status: "canceled",
+//           }
+//         );
+//         setParcels((prev) =>
+//           prev.map((parcel) =>
+//             parcel._id === parcelId ? { ...parcel, status: "canceled" } : parcel
+//           )
+//         );
+//         alert("Booking canceled successfully.");
+//       } catch (error) {
+//         console.error(error);
+//         alert("Failed to cancel the booking.");
+//       }
+//     }
+//   };
 
   // Filter parcels by status
   const filteredParcels =
@@ -114,8 +115,8 @@ const MyParcel = () => {
 
       {/* Parcels Table */}
       <div className="overflow-x-auto">
-        <table className="table w-full">
-          <thead>
+        <table className="table table-zebra w-full">
+          <thead className="bg-slate-800 text-white rounded-lg">
             <tr>
               <th>Parcel Type</th>
               <th>Requested Date</th>
@@ -130,10 +131,10 @@ const MyParcel = () => {
             {parcelsData.map((parcel) => (
               <tr key={parcel._id}>
                 <td className="font-bold">{parcel.parcelType}</td>
-                <td>{parcel.deliveryDate}</td>
-                <td>{parcel.approximateDeliveryDate || "Not Assigned"}</td>
-                <td>{parcel.bookingDate}</td>
-                <td>{parcel.deliveryMenId || "Not Assigned"}</td>
+                <td className="font-bold" >{parcel.deliveryDate}</td>
+                <td className="font-bold">{parcel.approximateDeliveryDate || "Not Assigned"}</td>
+                <td className="font-bold">{parcel.bookingDate}</td>
+                <td className="font-bold">{parcel.deliveryMenId || "Not Assigned"}</td>
                 <td>
                   <span
                     className={`badge text-nowrap w-full h-full ${
@@ -164,7 +165,7 @@ const MyParcel = () => {
                   {/* Cancel Button */}
                   <button
                     className="btn btn-sm btn-error flex items-center gap-1"
-                    onClick={() => handleCancel(parcel._id)}
+                    // onClick={() => handleCancel(parcel._id)}
                     disabled={parcel.status !== "pending"}
                   >
                     <AiOutlineDelete /> Cancel
