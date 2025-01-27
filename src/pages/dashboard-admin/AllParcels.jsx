@@ -103,7 +103,7 @@ const AllParcels = () => {
                 <td>{new Date(parcel.deliveryDate).toLocaleDateString()}</td>
                 <td>{parcel.price} Tk</td>
                 <td>
-                  <span className={`badge ${parcel.status === "On The Way" ? "badge-primary" : "badge-ghost"}`}>
+                  <span className={`badge ${parcel.status === "pending"?'bg-yellow-100 border border-yellow-500 rounded-full p-3':"badge-ghost"} ${parcel.status === "On The Way" ? "bg-slate-200 border border-black rounded-full p-3" : "badge-ghost"}`}>
                     {parcel.status}
                   </span>
                 </td>

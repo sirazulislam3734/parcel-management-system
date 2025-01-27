@@ -8,11 +8,12 @@ import BookAParcel from "../pages/dashboard-users/BookAParcel";
 import StatisticsPage from "../pages/dashboard-admin/StatisticsPage";
 import AllParcels from "../pages/dashboard-admin/AllParcels";
 import UserAndDelivery from "../pages/dashboard-admin/UserAndDelivery";
-import MyDeliveryList from "../pages/dashboard-Delivery-man/MyDeliveryList";
-import MyReviews from "../pages/dashboard-Delivery-man/MyReviews";
+// import MyDeliveryList from "../pages/dashboard-Delivery-man/MyDeliveryList";
+// import MyReviews from "../pages/dashboard-Delivery-man/MyReviews";
 import MyParcel from "../pages/dashboard-users/MyParcel";
 import MyProfile from "../pages/dashboard-users/MyProfile";
 import AdminRoute from "./AdminRoute";
+import UpdateMyParcel from "../pages/dashboard-users/UpdateMyParcel";
 
 export const router = createBrowserRouter([
     {
@@ -46,6 +47,10 @@ export const router = createBrowserRouter([
           element: <MyParcel />
         },
         {
+          path: 'updateParcel/:id',
+          element: <UpdateMyParcel />,
+        },
+        {
           path: 'myProfile',
           element: <MyProfile />
         },
@@ -63,14 +68,14 @@ export const router = createBrowserRouter([
           element: <AdminRoute><UserAndDelivery /></AdminRoute>
         },
         // Delivery Routes
-        {
-          path: 'myDeliveryList',
-          element: <MyDeliveryList />
-        },
-        {
-          path: 'myReviews',
-          element: <MyReviews />
-        },
+        // {
+        //   path: 'myDeliveryList',
+        //   element: <MyDeliveryList />
+        // },
+        // {
+        //   path: 'myReviews',
+        //   element: <MyReviews />
+        // },
       ]
     }
   ]);

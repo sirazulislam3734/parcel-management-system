@@ -7,7 +7,7 @@ import {
 } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import { MdPayment } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import noData from "../../assets/noData.json";
 import { useQuery } from "@tanstack/react-query";
@@ -138,13 +138,13 @@ const MyParcel = () => {
                   <span
                     className={`badge text-nowrap w-full h-full ${
                       parcel.status === "pending"
-                        ? "badge-warning"
+                        ? "bg-yellow-100 border border-yellow-300 rounded-full p-1"
                         : parcel.status === "on the way"
-                        ? "badge-info"
+                        ? "bg-slate-300 border border-black rounded-full p-3"
                         : parcel.status === "delivered"
-                        ? "badge-success"
+                        ? "bg-green-100 border border-green-500 rounded-full p-3"
                         : parcel.status === "canceled"
-                        ? "badge-error"
+                        ? "bg-red-100 border border-red-500 rounded-full p-3"
                         : "badge-neutral"
                     }`}
                   >
@@ -153,13 +153,13 @@ const MyParcel = () => {
                 </td>
                 <td className="flex flex-col gap-1">
                   {/* Update Button */}
+                  <Link to={`/dashboard/updateParcel/${parcel._id}`}>
                   <button
                     className="btn btn-sm btn-primary flex items-center gap-1"
-                    onClick={() => navigate(`/update-parcel/${parcel._id}`)}
                     disabled={parcel.status !== "pending"}
                   >
                     <AiOutlineEdit /> Update
-                  </button>
+                  </button></Link>
 
                   {/* Cancel Button */}
                   <button
