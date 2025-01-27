@@ -109,7 +109,7 @@ const Navbar = () => {
 
                   { user && !isAdmin && !isDelivery && (<li className="text-xl"><Link to='/dashboard/myParcel'><MdDashboardCustomize /> Dashboard</Link></li>)}
 
-                  { isDelivery && !isAdmin && !user && (<li className="text-xl"><Link to='/dashboard/myDeliveryList'><MdDashboardCustomize /> Dashboard</Link></li>)}
+                  { isDelivery && !isAdmin && user && (<li className="text-xl"><Link to='/dashboard/myDeliveryList'><MdDashboardCustomize /> Dashboard</Link></li>)}
                   <div className="lg:p-4 md:p-2 p-1 md:mx-8 mt-2">
                     <button
                       onClick={handleSignOut}

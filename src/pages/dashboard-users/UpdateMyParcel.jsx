@@ -4,40 +4,45 @@ import SectionTitle from "../../components/SectionTitle";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 
 const UpdateMyParcel = () => {
   const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
   const params = useParams();
   const { user } = useAuth();
   const [price, setPrice] = useState(0);
   const { data: updateData } = useQuery({
     queryKey: ["parcels", params.id],
     queryFn: async () => {
-      const res = await axiosPublic.get(`/bookAParcel/${params.id}`);
+      const res = await axiosPublic.get(`/bookAParcelGet/${params.id}`);
       return res.data;
     },
   });
   const {
     register,
     handleSubmit,
+    reset,
     watch,
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (data) => {
     console.log(data);
-   const res = await axiosPublic.patch(`/updateAParcel/${updateData._id}`, data)
+    const updatedData = { ...data, price: price };
+   const res = await axiosPublic.patch(`/updateAParcel/${updateData._id}`, updatedData)
         console.log(res.data);
         if (res.data.modifiedCount > 0) {
+            reset();
             Swal.fire({
                 title: "Good job!",
                 text: "Parcel updated successfully!",
                 icon: "success",
             });
+            navigate("/dashboard/myParcel");
         } else {
             Swal.fire({
                 title: "ERROR!",
@@ -46,7 +51,6 @@ const UpdateMyParcel = () => {
             });
         }
 };
-console.log('data', updateData, 'id', params.id);
   const parcelWeight = watch("parcelWeight");
   useEffect(() => {
     if (parcelWeight <= 1) {
@@ -206,8 +210,7 @@ console.log('data', updateData, 'id', params.id);
             <input
               type="text"
               className="input input-bordered w-full bg-gray-100"
-                defaultValue={updateData?.price}
-            //   value={price}
+              value={price}
               {...register("price")}
             />
           </div>

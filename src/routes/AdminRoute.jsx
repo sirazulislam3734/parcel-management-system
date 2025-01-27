@@ -10,7 +10,7 @@ const AdminRoute = ({children}) => {
 
     const location = useLocation()
   
-    if (loading || isAdminLoading) return <span className="loading loading-ring loading-lg"></span>
+    if (loading || isAdminLoading) return (<div className='flex items-center justify-center w-full min-h-[calc(100vh-305px)]'><span className="loading loading-ring w-32 "></span></div>)
     if (user && isAdmin) return children
     return <Navigate to='/login' state={location.pathname} replace></Navigate>
 };

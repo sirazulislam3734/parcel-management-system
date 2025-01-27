@@ -8,12 +8,14 @@ import BookAParcel from "../pages/dashboard-users/BookAParcel";
 import StatisticsPage from "../pages/dashboard-admin/StatisticsPage";
 import AllParcels from "../pages/dashboard-admin/AllParcels";
 import UserAndDelivery from "../pages/dashboard-admin/UserAndDelivery";
-// import MyDeliveryList from "../pages/dashboard-Delivery-man/MyDeliveryList";
-// import MyReviews from "../pages/dashboard-Delivery-man/MyReviews";
 import MyParcel from "../pages/dashboard-users/MyParcel";
 import MyProfile from "../pages/dashboard-users/MyProfile";
 import AdminRoute from "./AdminRoute";
 import UpdateMyParcel from "../pages/dashboard-users/UpdateMyParcel";
+import AllDeliveryMan from "../pages/dashboard-admin/AllDeliveryMan";
+import DeliveryManRoute from "./DeliveryManRoute";
+import MyDeliveryList from "../pages/dashboard-/MyDeliveryList";
+import MyReviews from "../pages/dashboard-/MyReviews";
 
 export const router = createBrowserRouter([
     {
@@ -65,18 +67,22 @@ export const router = createBrowserRouter([
           element: <AdminRoute><AllParcels /></AdminRoute>
         },
         {
-          path: 'usersAndDelivery',
+          path: 'allUsers',
           element: <AdminRoute><UserAndDelivery /></AdminRoute>
         },
+        {
+          path: 'allDeliveryMan',
+          element: <AdminRoute><AllDeliveryMan /></AdminRoute>
+        },
         // Delivery Routes
-        // {
-        //   path: 'myDeliveryList',
-        //   element: <MyDeliveryList />
-        // },
-        // {
-        //   path: 'myReviews',
-        //   element: <MyReviews />
-        // },
+        {
+          path: 'myDeliveryList',
+          element: <DeliveryManRoute><MyDeliveryList /></DeliveryManRoute>,
+        },
+        {
+          path: 'myReviews',
+          element: <DeliveryManRoute><MyReviews /></DeliveryManRoute>,
+        },
       ]
     }
   ]);

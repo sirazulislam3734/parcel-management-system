@@ -11,20 +11,20 @@ import useAuth from "../../hooks/useAuth";
 import noData from "../../assets/noData.json";
 import { useQuery } from "@tanstack/react-query";
 import Lottie from "lottie-react";
-import SectionTitle from "../../components/SectionTitle";
-// import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const MyParcel = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-//   const axiosPublic = useAxiosPublic();
+  const axiosPublic = useAxiosPublic();
   const [parcels, setParcels] = useState([]);
   const [filterStatus, setFilterStatus] = useState("all");
   const navigate = useNavigate();
 
   // Fetch all parcels booked by the logged-in user
-  const { data: parcelsData = [] } = useQuery({
+  const { data: parcelsData = [], refetch } = useQuery({
     queryKey: ["parcels", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/bookAParcel/${user?.email}`);
@@ -35,27 +35,18 @@ const MyParcel = () => {
   console.log(parcelsData);
 
   // Handle Cancel Parcel
-//   const handleCancel = async (parcelId) => {
-//     if (window.confirm("Are you sure you want to cancel this booking?")) {
-//       try {
-//         await axios.put(
-//           `https://your-backend-api-url/cancel-parcel/${parcelId}`,
-//           {
-//             status: "canceled",
-//           }
-//         );
-//         setParcels((prev) =>
-//           prev.map((parcel) =>
-//             parcel._id === parcelId ? { ...parcel, status: "canceled" } : parcel
-//           )
-//         );
-//         alert("Booking canceled successfully.");
-//       } catch (error) {
-//         console.error(error);
-//         alert("Failed to cancel the booking.");
-//       }
-//     }
-//   };
+  const handleCancel = async (parcelId) => {
+    const res = await axiosPublic.put(`/cancelParcel/${parcelId}`)
+    console.log(res.data);
+    if (res.data.modifiedCount > 0) {
+        refetch();
+        Swal.fire({
+                  title: "Good job!",
+                  text: "Booking Parcel Canceled successfully!",
+                  icon: "success",
+                });
+    }
+  };
 
   // Filter parcels by status
   const filteredParcels =
@@ -65,11 +56,7 @@ const MyParcel = () => {
 
   return (
     <div className="max-w-6xl lg:min-h-screen mx-auto p-5">
-     <SectionTitle
-        subTitle="---How many??---"
-        heading="My Parcel"
-      ></SectionTitle>
-
+     <h2 className="lg:text-5xl md:text-3xl text-xl font-bold text-center ">My Parcels</h2>
       {/* Filter Dropdown */}
       <div className="flex justify-end mb-4">
         <div className="dropdown dropdown-end">
@@ -141,11 +128,11 @@ const MyParcel = () => {
                       parcel.status === "pending"
                         ? "bg-yellow-100 border border-yellow-300 rounded-full p-1"
                         : parcel.status === "on the way"
-                        ? "bg-slate-300 border border-black rounded-full p-3"
+                        ? "bg-slate-300 border border-black rounded-full p-1"
                         : parcel.status === "delivered"
-                        ? "bg-green-100 border border-green-500 rounded-full p-3"
+                        ? "bg-green-100 border border-green-500 rounded-full p-1"
                         : parcel.status === "canceled"
-                        ? "bg-red-100 border border-red-500 rounded-full p-3"
+                        ? "bg-red-100 border border-red-500 rounded-full p-1"
                         : "badge-neutral"
                     }`}
                   >
@@ -156,7 +143,7 @@ const MyParcel = () => {
                   {/* Update Button */}
                   <Link to={`/dashboard/updateParcel/${parcel._id}`}>
                   <button
-                    className="btn btn-sm btn-primary flex items-center gap-1"
+                    className={`btn btn-sm btn-primary ${parcel.status === "canceled"?"cursor-not-allowed":''} flex items-center gap-1`}
                     disabled={parcel.status !== "pending"}
                   >
                     <AiOutlineEdit /> Update
@@ -165,7 +152,7 @@ const MyParcel = () => {
                   {/* Cancel Button */}
                   <button
                     className="btn btn-sm btn-error flex items-center gap-1"
-                    // onClick={() => handleCancel(parcel._id)}
+                    onClick={() => handleCancel(parcel._id)}
                     disabled={parcel.status !== "pending"}
                   >
                     <AiOutlineDelete /> Cancel

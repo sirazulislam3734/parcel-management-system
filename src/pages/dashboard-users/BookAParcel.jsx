@@ -27,7 +27,7 @@ const BookAParcel = () => {
     
     const bookingData = { ...data, status: "pending", price: price, bookingDate: new Date().toLocaleDateString(),  };
     try {
-      const res = await axiosPublic.post("/bookAParcel", bookingData);
+      const res = await axiosPublic.post("/bookAParcelPost", bookingData);
       if (res.data.insertedId) {
         reset();
         Swal.fire({

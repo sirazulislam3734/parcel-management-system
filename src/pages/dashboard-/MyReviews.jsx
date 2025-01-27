@@ -2,7 +2,7 @@
 
 const MyReviews = () => {
     return (
-        <div>
+        <div className="lg:min-h-screen w-full">
             My Reviews
         </div>
     );

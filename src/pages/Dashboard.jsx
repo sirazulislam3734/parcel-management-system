@@ -34,8 +34,13 @@ const Dashboard = () => {
                       </NavLink>
                     </li>
                     <li>
-                      <NavLink to="/dashboard/usersAndDelivery">
-                        <CgProfile size={18} /> All Users & Delivery Men
+                      <NavLink to="/dashboard/allUsers">
+                        <CgProfile size={18} /> All Users
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink to="/dashboard/allDeliveryMan">
+                        <CgProfile size={18} /> All Delivery Man 
                       </NavLink>
                     </li>
       

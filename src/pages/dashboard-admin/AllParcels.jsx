@@ -31,7 +31,7 @@ const AllParcels = () => {
   const handleAssignDelivery = async () => {
     try {
       const { id, deliveryMenId, approximateDeliveryDate } = selectedParcel;
-      await axiosSecure.put(`/updateParcel/${id}`, {
+      await axiosSecure.patch(`/updateParcel/${id}`, {
         deliveryMenId,
         approximateDeliveryDate,
         status: "On The Way",
@@ -56,7 +56,6 @@ const AllParcels = () => {
       console.error("Error fetching parcels by date:",parcels, error);
     }
   };
-
   return (
     <div className="max-w-7xl lg:min-h-screen mx-auto p-5">
       <h2 className="text-3xl font-bold mb-5 text-center">All Parcels</h2>
@@ -82,8 +81,8 @@ const AllParcels = () => {
 
       {/* Parcels Table */}
       <div className="overflow-x-auto">
-        <table className="table w-full">
-          <thead>
+        <table className="table table-zebra w-full">
+          <thead className="bg-slate-800 text-white">
             <tr>
               <th>User Name</th>
               <th>User Phone</th>
@@ -103,7 +102,7 @@ const AllParcels = () => {
                 <td>{new Date(parcel.deliveryDate).toLocaleDateString()}</td>
                 <td>{parcel.price} Tk</td>
                 <td>
-                  <span className={`badge ${parcel.status === "pending"?'bg-yellow-100 border border-yellow-500 rounded-full p-3':"badge-ghost"} ${parcel.status === "On The Way" ? "bg-slate-200 border border-black rounded-full p-3" : "badge-ghost"}`}>
+                  <span className={`badge ${parcel.status === "pending"?'bg-yellow-100 border border-yellow-500 rounded-full p-3':"badge-ghost"} ${parcel.status === "On The Way" ? "bg-slate-200 md:text-nowrap border border-black rounded-full p-3" : "badge-ghost"}`}>
                     {parcel.status}
                   </span>
                 </td>
@@ -155,10 +154,12 @@ const AllParcels = () => {
               />
             </div>
             <div className="modal-action">
-              <button className="btn btn-primary" onClick={handleAssignDelivery}>
+              <button className="btn btn-primary" 
+              onClick={() => handleAssignDelivery()}>
                 Assign
               </button>
-              <button className="btn" onClick={() => setSelectedParcel(null)}>
+              <button className="btn" 
+              onClick={() => setSelectedParcel(null)}>
                 Cancel
               </button>
             </div>

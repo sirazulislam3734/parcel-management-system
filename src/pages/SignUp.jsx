@@ -28,6 +28,7 @@ const SignUp = () => {
             const userInfo = {
               name: data?.name,
               email: data?.email,
+              phone: data?.phone,
               role: data?.userType,
             };
             axiosPublic.post("/users", userInfo).then((res) => {
@@ -144,6 +145,18 @@ const SignUp = () => {
                     {errors.name && (
                       <span className="text-red-500">
                         This photo URL is required
+                      </span>
+                    )}
+                    <input
+                      className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 mb-3 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                      type="number"
+                      name="phone"
+                      {...register("phone", { required: true })}
+                      placeholder="Phone Number"
+                    />
+                    {errors.phone && (
+                      <span className="text-red-500">
+                        This Phone Number is required
                       </span>
                     )}
                     <input
