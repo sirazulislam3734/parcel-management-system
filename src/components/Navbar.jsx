@@ -9,6 +9,7 @@ import useDeliveryMan from "../hooks/useDeliveryMan";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useState } from "react";
+import navbar from '../assets/images-removebg-preview.png'
 
 const Navbar = () => {
   const [isAdmin] = useAdmin();
@@ -43,15 +44,15 @@ const Navbar = () => {
   })
   refetch();
   return (
-    <nav className="bg-base-200 shadow-lg">
+    <nav className="bg-base-200 shadow-lg lg:px-20 md:px-10">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo and Site Name */}
         <div className="flex items-center gap-2">
-          <Link to="/" className="text-2xl font-bold text-primary">
+          <Link to="/" className="lg:text-3xl md:text-2xl text-lg text-nowrap font-bold text-primary">
             <img
-              src="/logo.png"
+              src={navbar}
               alt="Logo"
-              className="w-8 h-8 inline-block mr-2"
+              className="md:w-16 md:h-16 w-8 h-8 inline-block mr-2"
             />
             Parcel Manager
           </Link>
@@ -61,8 +62,8 @@ const Navbar = () => {
         <div className="flex items-center gap-4">
           {/* Notification Icon */}
           <button className="btn relative btn-ghost btn-circle">
-            <FiBell className="text-3xl text-neutral" />
-            <span className="absolute right-0 top-0 bg-purple-800 text-white px-1 rounded-full">{allParcel.length}</span>
+            <FiBell className="lg:text-3xl md:text-2xl text-xl text-neutral" />
+            <span className="absolute right-0 top-0 px-0.5 bg-purple-800 text-white md:px-1 rounded-full">{allParcel.length}</span>
           </button>
 
           {user ? (
@@ -80,7 +81,7 @@ const Navbar = () => {
                 </div>
                 <div
                   tabIndex={0}
-                  className="dropdown-content menu z-[1] md:w-96 p-4 sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto mt-16 bg-white shadow-xl rounded-lg text-gray-900"
+                  className="dropdown-content menu z-[1] md:w-72 p-4 sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto mt-16 bg-white shadow-xl rounded-lg text-gray-900"
                 >
                   <div className="rounded-t-lg h-32 overflow-hidden">
                     <img
@@ -105,7 +106,7 @@ const Navbar = () => {
                     </p>
                   </div>
                   <div className="divider"></div>
-                  { user && isAdmin && (<li className="text-xl"><Link to='/dashboard/allParcel'><MdDashboardCustomize /> Dashboard</Link></li>)}
+                  { user && isAdmin && (<li className="text-xl"><Link to='/dashboard/statistics'><MdDashboardCustomize /> Dashboard</Link></li>)}
 
                   { user && !isAdmin && !isDelivery && (<li className="text-xl"><Link to='/dashboard/myParcel'><MdDashboardCustomize /> Dashboard</Link></li>)}
 

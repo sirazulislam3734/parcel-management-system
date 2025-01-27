@@ -57,11 +57,11 @@ const AllParcels = () => {
     }
   };
   return (
-    <div className="max-w-7xl lg:min-h-screen mx-auto p-5">
+    <div className="max-w-7xl lg:min-h-screen mx-auto">
       <h2 className="text-3xl font-bold mb-5 text-center">All Parcels</h2>
 
       {/* Date Range Filter */}
-      <div className="flex items-center gap-3 mb-5">
+      <div className="flex md:flex-row flex-col items-center gap-3 mb-5">
         <input
           type="date"
           className="input input-bordered"

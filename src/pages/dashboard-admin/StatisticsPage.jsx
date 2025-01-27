@@ -2,7 +2,7 @@
 
 const StatisticsPage = () => {
     return (
-        <div>
+        <div className="h-screen">
             Statistics Page
         </div>
     );
