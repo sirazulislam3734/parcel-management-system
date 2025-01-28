@@ -16,11 +16,14 @@ import AllDeliveryMan from "../pages/dashboard-admin/AllDeliveryMan";
 import DeliveryManRoute from "./DeliveryManRoute";
 import MyDeliveryList from "../pages/dashboard-/MyDeliveryList";
 import MyReviews from "../pages/dashboard-/MyReviews";
+import ErrorPage from "../pages/ErrorPage";
+import Payment from "../pages/dashboard-users/Payment";
 
 export const router = createBrowserRouter([
     {
       path: "/",
       element: <MainLayout></MainLayout>,
+      errorElement: <ErrorPage />,
       children: [
         {
             path: "/",
@@ -39,6 +42,7 @@ export const router = createBrowserRouter([
     {
       path: 'dashboard',
       element: <Dashboard></Dashboard>,
+      errorElement: <ErrorPage />,
       children: [
         {
           path: 'parcel',
@@ -56,6 +60,10 @@ export const router = createBrowserRouter([
         {
           path: 'myProfile',
           element: <MyProfile />
+        },
+        {
+          path: 'paymentCreate/:id',
+          element: <Payment />
         },
         // Admin Routes
         {

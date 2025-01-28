@@ -6,7 +6,7 @@ import {
 } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import { MdPayment } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import noData from "../../assets/noData.json";
 import { useQuery } from "@tanstack/react-query";
@@ -22,7 +22,7 @@ const MyParcel = () => {
   const axiosPublic = useAxiosPublic();
   const [parcels, setParcels] = useState([]);
   const [filterStatus, setFilterStatus] = useState("all");
-  const navigate = useNavigate();
+
 
   // Fetch all parcels booked by the logged-in user
   const { data: parcelsData = [], refetch } = useQuery({
@@ -236,12 +236,13 @@ const MyParcel = () => {
                   </dialog>
 
                   {/* Pay Button */}
+                  <Link to={`/dashboard/paymentCreate/${parcel._id}`}>
                   <button
                     className="btn btn-sm btn-success flex items-center gap-1"
-                    onClick={() => navigate(`/pay-parcel/${parcel._id}`)}
                   >
                     <MdPayment /> Pay
                   </button>
+                  </Link>
                 </td>
               </tr>
             ))}
