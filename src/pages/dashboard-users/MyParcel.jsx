@@ -55,22 +55,21 @@ const MyParcel = () => {
         const form = e.target;
         const rating = form.rating.value; 
         const feedback = form.feedback.value; 
-        console.log(feedback, rating, e);
-        // const review = {feedback : feedback, rating : parseInt(rating) ,clientName: user?.displayName, clientPhoto: user?.photoURL, id: parcels.deliveryMenId }
-        // axiosPublic.post('/reviewPost', review)
-        // .then(res => {
-        //     console.log(res.data);
-        //     if(res.data?.insertedId){
-        //         refetch()
-        //         e.target.reset()
-        //         Swal.fire({
-        //             title: "Good job!",
-        //             text: "Review Send successfully!",
-        //             icon: "success",
-        //           });
-        //           e.target.reset()
-        //     }
-        // })
+        const review = {feedback : feedback, rating : parseInt(rating) ,clientName: user?.displayName, clientPhoto: user?.photoURL, id: parcels.deliveryMenId }
+        axiosPublic.post('/reviewPost', review)
+        .then(res => {
+            console.log(res.data);
+            if(res.data?.insertedId){
+                refetch()
+                e.target.reset()
+                Swal.fire({
+                    title: "Good job!",
+                    text: "Review Send successfully!",
+                    icon: "success",
+                  });
+                  e.target.reset()
+            }
+        })
     }
 
   // Filter parcels by status

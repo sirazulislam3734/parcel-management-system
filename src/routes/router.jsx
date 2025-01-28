@@ -57,7 +57,7 @@ export const router = createBrowserRouter([
         {
           path: 'updateParcel/:id',
           element: <UpdateMyParcel />,
-          // loader: ({params}) => fetch(`http://localhost:4000/bookAParcel/${params.id}`)
+          // loader: ({params}) => fetch(`parcel-management-system-server-tau.vercel.app/bookAParcel/${params.id}`)
         },
         {
           path: 'myProfile',

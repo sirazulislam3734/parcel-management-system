@@ -5,7 +5,7 @@ import axios from "axios";
 
 // Create a new Axios instance with base URL
 const axiosSecure = axios.create({
-  baseURL: "http://localhost:4000",
+  baseURL: "parcel-management-system-server-tau.vercel.app",
 });
 
 const useAxiosSecure = () => {
