@@ -65,8 +65,8 @@ const UserAndDelivery = () => {
                 <th>{index + 1}</th>
                 <td>{user.name}</td>
                 <td>{user.phone}</td>
-                <td>5</td>
-                <td>205 TK</td>
+                <td>{user.totalBooking} Booked</td>
+                <td>{user.totalAmount} TK</td>
                 <td>
                   {user.role === "Delivery Man" ? (
                     <span className="bg-green-100 text-nowrap px-2 border border-green-400 py-1 rounded-full">

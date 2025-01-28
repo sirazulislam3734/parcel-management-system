@@ -25,7 +25,7 @@ const BookAParcel = () => {
   const onSubmit = async (data) => {
     console.log(data);
     
-    const bookingData = { ...data, status: "pending", price: price, bookingDate: new Date().toLocaleDateString(),  };
+    const bookingData = { ...data, status: "pending", price: price, bookingDate: new Date().toLocaleDateString()};
     try {
       const res = await axiosPublic.post("/bookAParcelPost", bookingData);
       if (res.data.insertedId) {

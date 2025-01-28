@@ -32,6 +32,7 @@ const AllParcels = () => {
     try {
       const { id, deliveryMenId, approximateDeliveryDate } = selectedParcel;
       await axiosSecure.patch(`/updateParcel/${id}`, {
+        Id: id,
         deliveryMenId,
         approximateDeliveryDate,
         status: "On The Way",

@@ -106,7 +106,7 @@ const Navbar = () => {
                     </p>
                   </div>
                   <div className="divider"></div>
-                  { isAdmin && !user &&(<li className="text-xl"><Link to='/dashboard/statistics'><MdDashboardCustomize /> Dashboard</Link></li>)}
+                  { isAdmin && user &&(<li className="text-xl"><Link to='/dashboard/statistics'><MdDashboardCustomize /> Dashboard</Link></li>)}
 
                   { user && !isAdmin && !isDelivery && (<li className="text-xl"><Link to='/dashboard/myParcel'><MdDashboardCustomize /> Dashboard</Link></li>)}
 

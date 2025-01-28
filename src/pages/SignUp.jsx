@@ -57,7 +57,6 @@ const SignUp = () => {
           role: "User",
         };
         axiosPublic.post("/users", userInfo).then((res) => {
-          console.log(res.data);
           if (res.data.insertedId) {
             Swal.fire({
               title: "success!",

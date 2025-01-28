@@ -33,7 +33,7 @@ const AllDeliveryMan = () => {
                 <th>{index + 1}</th>
                 <td>{deliveryMan?.name}</td>
                 <td>{deliveryMan?.phone}</td>
-                <td>{} Delivered</td>
+                <td>{deliveryMan?.totalDeliver} Delivered</td>
                 <td>Review</td>
               </tr>
             ))}

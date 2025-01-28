@@ -15,6 +15,7 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 
+
 const MyParcel = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
@@ -32,21 +33,44 @@ const MyParcel = () => {
       return res.data;
     },
   });
-  console.log(parcelsData);
 
   // Handle Cancel Parcel
   const handleCancel = async (parcelId) => {
-    const res = await axiosPublic.put(`/cancelParcel/${parcelId}`)
+    const res = await axiosPublic.put(`/cancelParcel/${parcelId}`);
     console.log(res.data);
     if (res.data.modifiedCount > 0) {
-        refetch();
-        Swal.fire({
-                  title: "Good job!",
-                  text: "Booking Parcel Canceled successfully!",
-                  icon: "success",
-                });
+      refetch();
+      Swal.fire({
+        title: "Good job!",
+        text: "Booking Parcel Canceled successfully!",
+        icon: "success",
+      });
     }
   };
+
+  
+    const handleSubmit = e => {
+        e.preventDefault()
+        const form = e.target;
+        const rating = form.rating.value; 
+        const feedback = form.feedback.value; 
+        console.log(feedback, rating);
+        const review = {feedback : feedback, rating : parseInt(rating) ,reviewName: user?.displayName, reviewPhoto: user?.photoURL, id: parcels.deliveryMenId }
+        axiosPublic.post('/reviewPost', review)
+        .then(res => {
+            console.log(res.data);
+            if(res.data?.insertedId){
+                refetch()
+                e.target.reset()
+                Swal.fire({
+                    title: "Good job!",
+                    text: "Review Send successfully!",
+                    icon: "success",
+                  });
+                  e.target.reset()
+            }
+        })
+    }
 
   // Filter parcels by status
   const filteredParcels =
@@ -56,7 +80,9 @@ const MyParcel = () => {
 
   return (
     <div className="max-w-6xl lg:min-h-screen mx-auto p-5">
-     <h2 className="lg:text-5xl md:text-3xl text-xl font-bold text-center ">My Parcels</h2>
+      <h2 className="lg:text-5xl md:text-3xl text-xl font-bold text-center ">
+        My Parcels
+      </h2>
       {/* Filter Dropdown */}
       <div className="flex justify-end mb-4">
         <div className="dropdown dropdown-end">
@@ -118,10 +144,14 @@ const MyParcel = () => {
             {parcelsData.map((parcel) => (
               <tr key={parcel._id}>
                 <td className="font-bold">{parcel.parcelType}</td>
-                <td className="font-bold" >{parcel.deliveryDate}</td>
-                <td className="font-bold">{parcel.approximateDeliveryDate || "Not Assigned"}</td>
+                <td className="font-bold">{parcel.deliveryDate}</td>
+                <td className="font-bold">
+                  {parcel.approximateDeliveryDate || "Not Assigned"}
+                </td>
                 <td className="font-bold">{parcel.bookingDate}</td>
-                <td className="font-bold">{parcel.deliveryMenId || "Not Assigned"}</td>
+                <td className="font-bold">
+                  {parcel.deliveryMenId || "Not Assigned"}
+                </td>
                 <td>
                   <span
                     className={`badge text-nowrap w-full h-full ${
@@ -129,7 +159,7 @@ const MyParcel = () => {
                         ? "bg-yellow-100 border border-yellow-300 rounded-full p-1"
                         : parcel.status === "on the way"
                         ? "bg-slate-300 border border-black rounded-full p-1"
-                        : parcel.status === "delivered"
+                        : parcel.status === "Delivered"
                         ? "bg-green-100 border border-green-500 rounded-full p-1"
                         : parcel.status === "canceled"
                         ? "bg-red-100 border border-red-500 rounded-full p-1"
@@ -142,12 +172,15 @@ const MyParcel = () => {
                 <td className="flex flex-col gap-1">
                   {/* Update Button */}
                   <Link to={`/dashboard/updateParcel/${parcel._id}`}>
-                  <button
-                    className={`btn btn-sm btn-primary ${parcel.status === "canceled"?"cursor-not-allowed":''} flex items-center gap-1`}
-                    disabled={parcel.status !== "pending"}
-                  >
-                    <AiOutlineEdit /> Update
-                  </button></Link>
+                    <button
+                      className={`btn btn-sm btn-primary ${
+                        parcel.status === "canceled" ? "cursor-not-allowed" : ""
+                      } flex items-center gap-1`}
+                      disabled={parcel.status !== "pending"}
+                    >
+                      <AiOutlineEdit /> Update
+                    </button>
+                  </Link>
 
                   {/* Cancel Button */}
                   <button
@@ -159,14 +192,48 @@ const MyParcel = () => {
                   </button>
 
                   {/* Review Button */}
-                  {parcel.status === "delivered" && (
+                  {parcel.status === "Delivered" && (
                     <button
                       className="btn btn-sm btn-accent flex items-center gap-1"
-                      onClick={() => navigate(`/review-parcel/${parcel._id}`)}
+                      onClick={() =>
+                        document.getElementById("my_modal_2").showModal()
+                      }
                     >
                       <BiCommentDetail /> Review
                     </button>
                   )}
+                  {/* Open the modal using document.getElementById('ID').showModal() method */}
+                  <dialog id="my_modal_2" className="modal">
+                  <div className="modal-box mx-auto">
+                     <h2 className="text-center lg:text-3xl md:text-2xl text-xl font-bold">Review Now</h2>
+                    <form 
+                    onSubmit={handleSubmit} 
+                    className="flex flex-col gap-5">
+                      <fieldset className="fieldset">
+                        <legend className="fieldset-legend">
+                          Rating Now?
+                        </legend>
+                        <input
+                          type="number"
+                          className="input w-full"
+                          placeholder="Type here"
+                          name="rating"
+                        />
+                        
+                      </fieldset>
+                      <fieldset className="fieldset">
+                        <legend className="fieldset-legend">Feedback</legend>
+                        <textarea
+                          className="textarea w-full h-24"
+                          placeholder="Bio"
+                          name="feedback"
+                        ></textarea>
+                        
+                      </fieldset>
+                      <button className="text-center btn btn-primary">Submit</button>
+                    </form>
+                    </div>
+                  </dialog>
 
                   {/* Pay Button */}
                   <button

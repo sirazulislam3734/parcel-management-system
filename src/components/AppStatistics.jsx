@@ -1,29 +1,30 @@
-import { useEffect, useState } from "react";
+
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import CountUp from "react-countup";
-import axios from "axios";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+
 
 const AppStatistics = () => {
-  const [stats, setStats] = useState({
-    totalParcels: 0,
-    totalDelivered: 0,
-    totalUsers: 0,
-  });
   const [loading, setLoading] = useState(true);
+  const axiosSecure = useAxiosSecure();
+  const { data: users = [] } = useQuery({
+    queryKey: ["users"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/users");
+      setLoading(false)
+      return res.data;
+    },
+  });
 
-  useEffect(() => {
-    fetchStats();
-  }, []);
-
-  const fetchStats = async () => {
-    try {
-      const response = await axios.get("/api/admin/stats");
-      setStats(response.data);
-    } catch (error) {
-      console.error("Error fetching statistics:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { data: parcels = [] } = useQuery({
+    queryKey: ["parcels"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/allParcelBook");
+    //   setLoading(false)
+      return res.data;
+    },
+  });
 
   return (
     <div className="p-4 lg:px-20 bg-base-200 md:px-10 md:py-5">
@@ -40,7 +41,7 @@ const AppStatistics = () => {
             <CountUp
               className="text-3xl font-bold text-blue-500"
               start={0}
-              end={stats.totalParcels}
+              end={parcels.length}
               duration={2}
               separator=","
             />
@@ -52,7 +53,7 @@ const AppStatistics = () => {
             <CountUp
               className="text-3xl font-bold text-green-500"
               start={0}
-              end={stats.totalDelivered}
+            //   end={stats.totalDelivered}
               duration={2}
               separator=","
             />
@@ -64,7 +65,7 @@ const AppStatistics = () => {
             <CountUp
               className="text-3xl font-bold text-purple-500"
               start={0}
-              end={stats.totalUsers}
+              end={users.length}
               duration={2}
               separator=","
             />
