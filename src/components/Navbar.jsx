@@ -33,7 +33,6 @@ const Navbar = () => {
         });
       });
   };
-  console.log(parcels);
   const {data: allParcel = [], refetch} = useQuery({
     queryKey: ["parcels"],
     queryFn: async () => {

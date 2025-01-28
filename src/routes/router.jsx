@@ -18,6 +18,8 @@ import MyDeliveryList from "../pages/dashboard-/MyDeliveryList";
 import MyReviews from "../pages/dashboard-/MyReviews";
 import ErrorPage from "../pages/ErrorPage";
 import Payment from "../pages/dashboard-users/Payment";
+import PaymentHistory from "../pages/dashboard-users/PaymentHistory";
+import UpdateProfile from "../pages/dashboard-users/UpdateProfile";
 
 export const router = createBrowserRouter([
     {
@@ -62,8 +64,16 @@ export const router = createBrowserRouter([
           element: <MyProfile />
         },
         {
+          path: 'updateProfile',
+          element: <UpdateProfile />
+        },
+        {
           path: 'paymentCreate/:id',
           element: <Payment />
+        },
+        {
+          path: 'paymentHistory',
+          element: <PaymentHistory />
         },
         // Admin Routes
         {

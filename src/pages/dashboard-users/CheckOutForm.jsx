@@ -4,28 +4,36 @@ import Swal from "sweetalert2";
 import useCard from "../../hooks/useCard";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+
 
 const CheckOutForm = () => {
   const [clientSecrets, setClientSecret] = useState("");
   const [translation, setTranslation] = useState("");
   const navigate = useNavigate();
   const stripe = useStripe();
+  const params = useParams()
   const { user } = useAuth();
   const elements = useElements();
   const axiosSecure = useAxiosSecure();
   const [card, refetch] = useCard();
-  const totalPrice = card.reduce((total, item) => total + item.price, 0);
+  const {data} = useQuery({
+    queryKey: ["parcels", params.id],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/bookAParcelGet/${params.id}`);
+      return res.data;
+    },
+  });
   useEffect(() => {
-    if (totalPrice > 0) {
-      axiosSecure
-        .post(`/create-payment-intent`, { price: totalPrice })
+    if (data?.price > 0) {
+      axiosSecure.post(`/create-payment-intent`, { price: data?.price })
         .then((res) => {
-          console.log("responsive Data", res.data.clientSecret);
+          console.log("responsive Data", res.data);
           setClientSecret(res.data.clientSecret);
         });
     }
-  }, [axiosSecure, totalPrice]);
+  }, [axiosSecure, data?.price]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!stripe || !elements) {
@@ -63,12 +71,9 @@ const CheckOutForm = () => {
         setTranslation(paymentIntent.id);
         const payment = {
           email: user?.email,
-          price: totalPrice,
+          price: data?.price,
           date: new Date(),
-          cardIds: card.map((items) => items._id),
-          menuItemIds: card.map((item) => item.menuId),
-          transactionId: paymentIntent.id,
-          status: "pending",
+          transactionId: translation,
         };
 
         const res = await axiosSecure.post("/payments", payment);
@@ -80,13 +85,13 @@ const CheckOutForm = () => {
             text: "Payment is Successful!",
             icon: "success",
           });
-          navigate("paymentHistory");
+          navigate("/dashboard/paymentHistory");
         }
       }
     }
   };
-  console.log('stripe', stripe);
-  console.log('clientSecrets', clientSecrets);
+//   console.log('stripe', stripe, translation);
+//   console.log('clientSecrets', clientSecrets);
   return (
     <form onSubmit={handleSubmit}>
       <CardElement

@@ -1,23 +1,20 @@
-// React Icon
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
-import { Link } from "react-router-dom";
 
-const MyProfile = () => {
-  const { user } = useAuth();
 
-  // Handle Image Upload
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const onSubmit = async (data) => {
-    console.log(data);
-  };
-
-  return (
-    <div className="max-w-3xl mx-auto p-6">
+const UpdateProfile = () => {
+    const {user} = useAuth()
+      const {
+        register,
+        handleSubmit,
+        formState: { errors },
+      } = useForm();
+      const onSubmit = async (data) => {
+        console.log(data);
+      }
+    return (
+        <div>
+            <div className="max-w-3xl mx-auto p-6">
       <h1 className="text-3xl font-semibold mb-6 text-center">My Profile</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="bg-white shadow-xl rounded-lg p-6">
@@ -25,8 +22,9 @@ const MyProfile = () => {
             {/* Profile Picture */}
             <div className="w-32 h-32 rounded-full overflow-hidden mb-4">
               <img
-                src={user?.photoURL}
+                src=''
                 alt="Profile"
+                defaultValue={user?.photoURL}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -35,7 +33,7 @@ const MyProfile = () => {
             <input
               type="text"
               className="text-xl border-none text-center font-medium"
-              value={user?.displayName}
+              defaultValue={user?.displayName}
               {...register("name", { required: true })}
             />
             {errors.name && (
@@ -44,7 +42,7 @@ const MyProfile = () => {
             <input
               type="email"
               className="text-xl border-none text-center font-medium"
-              value={user?.email}
+              defaultValue={user?.email}
               {...register("email", { required: true })}
             />
           </div>
@@ -66,17 +64,16 @@ const MyProfile = () => {
           </div>
 
           {/* Update Button */}
-          <Link to={`/dashboard/updateProfile`}>
           <button
             className="btn btn-primary mt-6 w-full"
           >
             Update Profile
           </button>
-          </Link>
         </div>
       </form>
     </div>
-  );
+        </div>
+    );
 };
 
-export default MyProfile;
+export default UpdateProfile;

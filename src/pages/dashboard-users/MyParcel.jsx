@@ -51,25 +51,26 @@ const MyParcel = () => {
   
     const handleSubmit = e => {
         e.preventDefault()
+
         const form = e.target;
         const rating = form.rating.value; 
         const feedback = form.feedback.value; 
-        console.log(feedback, rating);
-        const review = {feedback : feedback, rating : parseInt(rating) ,reviewName: user?.displayName, reviewPhoto: user?.photoURL, id: parcels.deliveryMenId }
-        axiosPublic.post('/reviewPost', review)
-        .then(res => {
-            console.log(res.data);
-            if(res.data?.insertedId){
-                refetch()
-                e.target.reset()
-                Swal.fire({
-                    title: "Good job!",
-                    text: "Review Send successfully!",
-                    icon: "success",
-                  });
-                  e.target.reset()
-            }
-        })
+        console.log(feedback, rating, e);
+        // const review = {feedback : feedback, rating : parseInt(rating) ,clientName: user?.displayName, clientPhoto: user?.photoURL, id: parcels.deliveryMenId }
+        // axiosPublic.post('/reviewPost', review)
+        // .then(res => {
+        //     console.log(res.data);
+        //     if(res.data?.insertedId){
+        //         refetch()
+        //         e.target.reset()
+        //         Swal.fire({
+        //             title: "Good job!",
+        //             text: "Review Send successfully!",
+        //             icon: "success",
+        //           });
+        //           e.target.reset()
+        //     }
+        // })
     }
 
   // Filter parcels by status
@@ -196,7 +197,10 @@ const MyParcel = () => {
                     <button
                       className="btn btn-sm btn-accent flex items-center gap-1"
                       onClick={() =>
+                      {
                         document.getElementById("my_modal_2").showModal()
+
+                      }
                       }
                     >
                       <BiCommentDetail /> Review
@@ -207,7 +211,7 @@ const MyParcel = () => {
                   <div className="modal-box mx-auto">
                      <h2 className="text-center lg:text-3xl md:text-2xl text-xl font-bold">Review Now</h2>
                     <form 
-                    onSubmit={handleSubmit} 
+                    onSubmit={() =>  handleSubmit(parcel)} 
                     className="flex flex-col gap-5">
                       <fieldset className="fieldset">
                         <legend className="fieldset-legend">
