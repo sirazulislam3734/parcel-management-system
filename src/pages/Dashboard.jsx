@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
 
 const Dashboard = () => {
     const navigate = useNavigate()
-  const { user , signOutUser} = useAuth();
+  const { signOutUser} = useAuth();
   const [isAdmin] = useAdmin();
   const [isDelivery] = useDeliveryMan();
 
@@ -149,18 +149,6 @@ const Dashboard = () => {
                   </li>
                 </ul>
               )}
-            </div>
-          </div>
-
-          {/* User Profile */}
-          <div className="p-4 flex flex-col-reverse gap-5 lg:items-center">
-            <img
-              className="w-10 h-10 border rounded-full object-cover"
-              src={user.photoURL}
-              alt=""
-            />
-            <div>
-              <p className="text-sm font-medium">{user.displayName}</p>
             </div>
           </div>
         </div>
