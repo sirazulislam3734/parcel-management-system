@@ -2,12 +2,12 @@ import BannerImg from "../assets/banner2.jpg";
 
 const Banner = () => {
   return (
-    <div>
+    <div className="">
       <section
-        className="bg-cover bg-center h-[500px] flex items-center justify-center"
+        className="bg-cover mx-auto bg-center h-[500px] flex items-center justify-center"
         style={{ backgroundImage: `url(${BannerImg})` }}
       >
-        <div className="text-center container mx-auto  px-4">
+        <div className="text-center px-4">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
             Welcome to Parcel Manager
           </h1>

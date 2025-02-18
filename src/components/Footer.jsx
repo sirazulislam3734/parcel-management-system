@@ -1,55 +1,121 @@
+/* eslint-disable react/no-unknown-property */
 import footerImg from '../assets/images-removebg-preview.png'
+import SocialLinks from './SocialLinks';
 
 const Footer = () => {
   return (
-    <footer className="footer flex flex-col sm:footer-horizontal footer-center bg-primary text-primary-content p-10">
-      <aside>
-        <img src={footerImg} className='w-20 h-20' alt="" />
-        <p className="font-bold">
-        Parcel Manager.
-          <br />
-          Parcel Management System
-        </p>
-        <p>Copyright © {new Date().getFullYear()} - All right reserved</p>
-      </aside>
-      <nav>
-        <div className="grid grid-flow-col gap-4">
-          <a>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              className="fill-current"
+    <div className="p-4 lg:px-20 bg-base-200 md:px-10 md:py-5">
+      <div className="container mx-auto">
+        <div className="grid gap-10 row-gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="sm:col-span-2">
+            <a
+              href="/"
+              aria-label="Go home"
+              title="Company"
+              className="inline-flex items-center"
             >
-              <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path>
-            </svg>
-          </a>
-          <a>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              className="fill-current"
-            >
-              <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
-            </svg>
-          </a>
-          <a>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              className="fill-current"
-            >
-              <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
-            </svg>
-          </a>
+              <img src={footerImg} alt="" className='w-16' />
+              <span className="ml-2 text-2xl font-bold tracking-wide text-primary uppercase">
+              Parcel Management
+              </span>
+            </a>
+            <div className="mt-6 lg:max-w-sm">
+              <p className="text-sm text-gray-800">
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+                accusantium doloremque laudantium, totam rem aperiam.
+              </p>
+              <p className="mt-4 text-sm text-gray-800">
+                Eaque ipsa quae ab illo inventore veritatis et quasi architecto
+                beatae vitae dicta sunt explicabo.
+              </p>
+            </div>
+          </div>
+          <div className="space-y-2 text-sm">
+            <p className="text-base font-bold tracking-wide text-primary">
+              Contacts
+            </p>
+            <div className="flex">
+              <p className="mr-1 text-gray-800 font-semibold">Phone:</p>
+              <a
+                href="tel:850-123-5021"
+                aria-label="Our phone"
+                title="Our phone"
+                className="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800"
+              >
+                +8801869-921351
+              </a>
+            </div>
+            <div className="flex">
+              <p className="mr-1 text-gray-800 font-semibold">Email:</p>
+              <a
+                href="mailto:info@lorem.mail"
+                aria-label="Our email"
+                title="Our email"
+                className="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800"
+              >
+                sirazulislam3734@gmail.com
+              </a>
+            </div>
+            <div className="flex">
+              <p className="mr-1 text-gray-800 font-semibold">Address:</p>
+              <a
+                href="https://www.google.com/maps"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Our address"
+                title="Our address"
+                className="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800"
+              >
+               Kosba, Brahmanbaria , Bangladesh
+              </a>
+            </div>
+          </div>
+          <div>
+            <span className="text-base font-bold tracking-wide text-primary">
+              Social
+            </span>
+            <div className="flex items-center mt-1 space-x-3">
+              <SocialLinks></SocialLinks>
+            </div>
+            <p className="mt-4 text-sm text-gray-500">
+              Bacon ipsum dolor amet short ribs pig sausage prosciutto chicken
+              spare ribs salami.
+            </p>
+          </div>
         </div>
-      </nav>
-    </footer>
+        <div className="flex flex-col-reverse justify-between pt-5 pb-10 border-t lg:flex-row">
+          <p className="text-sm text-gray-600">
+            © Copyright 2025 Inc. All rights reserved.
+          </p>
+          <ul className="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row">
+            <li>
+              <a
+                href="/"
+                className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
+              >
+                F.A.Q
+              </a>
+            </li>
+            <li>
+              <a
+                href="/"
+                className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
+              >
+                Privacy Policy
+              </a>
+            </li>
+            <li>
+              <a
+                href="/"
+                className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400"
+              >
+                Terms &amp; Conditions
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   );
 };
 

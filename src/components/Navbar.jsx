@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import { Link } from "react-router-dom";
 import { FiBell } from "react-icons/fi";
 import { MdDashboardCustomize } from "react-icons/md";
@@ -13,7 +14,7 @@ import navbar from "../assets/images-removebg-preview.png";
 const Navbar = () => {
   const navOption = (
     <ul className="list-none flex items-center gap-5">
-      <li className="">
+      <li>
         <a
           className="relative inline-block cursor-pointer select-none overflow-hidden whitespace-nowrap rounded p-2 text-center align-middle text-xs font-medium leading-5 tracking-wide text-slate-800 transition duration-300 ease-linear hover:text-blue-700 hover:shadow-2xl hover:shadow-blue-600"
           href="/"
@@ -21,7 +22,7 @@ const Navbar = () => {
           <span className="text-sm md:text-xl">Home</span>
         </a>
       </li>
-      <li className="">
+      <li>
         <a
           className="relative inline-block cursor-pointer select-none overflow-hidden whitespace-nowrap rounded p-2 text-center align-middle text-xs font-medium leading-5 tracking-wide text-slate-800 transition duration-300 ease-linear hover:text-blue-700 hover:shadow-2xl hover:shadow-blue-600"
           href="#about"
@@ -29,7 +30,7 @@ const Navbar = () => {
           <span className="text-sm md:text-xl">About Us</span>
         </a>
       </li>
-      <li className="">
+      <li>
         <a
           className="relative inline-block cursor-pointer select-none overflow-hidden whitespace-nowrap rounded p-2 text-center align-middle text-xs font-medium leading-5 tracking-wide text-slate-800 transition duration-300 ease-linear hover:text-blue-700 hover:shadow-2xl hover:shadow-blue-600"
           href="#service"
@@ -37,7 +38,7 @@ const Navbar = () => {
           <span className="text-sm md:text-xl">Service</span>
         </a>
       </li>
-      <li className="">
+      <li>
         <a
           className="relative inline-block cursor-pointer select-none overflow-hidden whitespace-nowrap rounded p-2 text-center align-middle text-xs font-medium leading-5 tracking-wide text-slate-800 transition duration-300 ease-linear hover:text-primary hover:shadow-2xl hover:shadow-blue-600"
           href="#contact"
@@ -47,15 +48,17 @@ const Navbar = () => {
       </li>
     </ul>
   );
+
   const [isAdmin] = useAdmin();
   const [isDelivery] = useDeliveryMan();
   const { user, signOutUser } = useAuth();
+
   const handleSignOut = () => {
     signOutUser()
       .then(() => {
         Swal.fire({
           title: "success!",
-          text: "User Log out successfully!",
+          text: "User logged out successfully!",
           icon: "success",
         });
       })
@@ -67,6 +70,7 @@ const Navbar = () => {
         });
       });
   };
+
   const { data: allParcel = [], refetch } = useQuery({
     queryKey: ["parcels"],
     queryFn: async () => {
@@ -75,19 +79,39 @@ const Navbar = () => {
     },
   });
   refetch();
+
   return (
-    <nav className="bg-base-200 shadow-lg lg:px-20 md:px-10">
-      <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+    <nav className="bg-base-200 shadow-lg px-4 py-3">
+      <div className="container mx-auto flex justify-between items-center">
+        {/* Mobile view: Menu toggle */}
+        <div className="md:hidden flex items-center flex-row-reverse">
+          <button className="btn btn-ghost btn-circle">
+            <FiBell className="text-xl text-neutral" />
+          </button>
+          <button className="btn btn-ghost">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            </svg>
+          </button>
+        </div>
         {/* Logo and Site Name */}
         <div className="flex items-center gap-2">
-          <Link
-            to="/"
-            className="lg:text-3xl md:text-2xl text-lg text-nowrap font-bold text-primary"
-          >
+          <Link to="/" className="text-lg md:text-2xl font-bold text-primary">
             <img
               src={navbar}
               alt="Logo"
-              className="md:w-16 md:h-16 w-8 h-8 inline-block mr-2"
+              className="w-8 h-8 md:w-16 md:h-16 inline-block mr-2"
             />
             Parcel Manager
           </Link>
@@ -95,12 +119,13 @@ const Navbar = () => {
 
         {/* Notification Icon and Profile/Login */}
         <div className="flex items-center gap-4">
-          {navOption}
+          {/* Navigation links */}
+          <div className="hidden lg:flex">{navOption}</div>
 
           {/* Notification Icon */}
-          <button className="btn relative btn-ghost btn-circle">
-            <FiBell className="lg:text-3xl md:text-2xl text-xl text-neutral" />
-            <span className="absolute right-0 top-0 px-0.5 bg-purple-800 text-white md:px-1 rounded-full">
+          <button className="btn relative btn-ghost btn-circle hidden md:block">
+            <FiBell className="text-xl text-neutral" />
+            <span className="absolute right-0 top-0 px-0.5 bg-purple-800 text-white rounded-full text-xs">
               {allParcel.length}
             </span>
           </button>
@@ -120,7 +145,7 @@ const Navbar = () => {
                 </div>
                 <div
                   tabIndex={0}
-                  className="dropdown-content menu z-[1] md:w-72 p-4 sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto mt-16 bg-white shadow-xl rounded-lg text-gray-900"
+                  className="dropdown-content menu z-[1] w-72 p-4 sm:mx-auto md:mx-auto lg:mx-auto xl:mx-auto mt-16 bg-white shadow-xl rounded-lg text-gray-900"
                 >
                   <div className="rounded-t-lg h-32 overflow-hidden">
                     <img
@@ -168,10 +193,10 @@ const Navbar = () => {
                       </Link>
                     </li>
                   )}
-                  <div className="lg:p-4 md:p-2 p-1 md:mx-8 mt-2">
+                  <div className="p-2 mt-2">
                     <button
                       onClick={handleSignOut}
-                      className="w-full block mx-auto rounded-full bg-gray-900 hover:shadow-lg font-semibold text-white px-6 py-2"
+                      className="w-full rounded-full bg-gray-900 hover:shadow-lg text-white px-6 py-2"
                     >
                       Log Out
                     </button>
