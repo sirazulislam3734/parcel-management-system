@@ -8,12 +8,46 @@ import useAdmin from "../hooks/useAdmin";
 import useDeliveryMan from "../hooks/useDeliveryMan";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
-import { useState } from "react";
-import navbar from '../assets/images-removebg-preview.png'
+import navbar from "../assets/images-removebg-preview.png";
 
 const Navbar = () => {
+  const navOption = (
+    <ul className="list-none flex items-center gap-5">
+      <li className="">
+        <a
+          className="relative inline-block cursor-pointer select-none overflow-hidden whitespace-nowrap rounded p-2 text-center align-middle text-xs font-medium leading-5 tracking-wide text-slate-800 transition duration-300 ease-linear hover:text-blue-700 hover:shadow-2xl hover:shadow-blue-600"
+          href="/"
+        >
+          <span className="text-sm md:text-xl">Home</span>
+        </a>
+      </li>
+      <li className="">
+        <a
+          className="relative inline-block cursor-pointer select-none overflow-hidden whitespace-nowrap rounded p-2 text-center align-middle text-xs font-medium leading-5 tracking-wide text-slate-800 transition duration-300 ease-linear hover:text-blue-700 hover:shadow-2xl hover:shadow-blue-600"
+          href="#about"
+        >
+          <span className="text-sm md:text-xl">About Us</span>
+        </a>
+      </li>
+      <li className="">
+        <a
+          className="relative inline-block cursor-pointer select-none overflow-hidden whitespace-nowrap rounded p-2 text-center align-middle text-xs font-medium leading-5 tracking-wide text-slate-800 transition duration-300 ease-linear hover:text-blue-700 hover:shadow-2xl hover:shadow-blue-600"
+          href="#service"
+        >
+          <span className="text-sm md:text-xl">Service</span>
+        </a>
+      </li>
+      <li className="">
+        <a
+          className="relative inline-block cursor-pointer select-none overflow-hidden whitespace-nowrap rounded p-2 text-center align-middle text-xs font-medium leading-5 tracking-wide text-slate-800 transition duration-300 ease-linear hover:text-primary hover:shadow-2xl hover:shadow-blue-600"
+          href="#contact"
+        >
+          <span className="text-sm md:text-xl">Contact Us</span>
+        </a>
+      </li>
+    </ul>
+  );
   const [isAdmin] = useAdmin();
-  const [parcels, setParcels] = useState([]);
   const [isDelivery] = useDeliveryMan();
   const { user, signOutUser } = useAuth();
   const handleSignOut = () => {
@@ -33,21 +67,23 @@ const Navbar = () => {
         });
       });
   };
-  const {data: allParcel = [], refetch} = useQuery({
+  const { data: allParcel = [], refetch } = useQuery({
     queryKey: ["parcels"],
     queryFn: async () => {
       const response = await useAxiosSecure.get("/bookAParcel");
-      setParcels(response.data);
       return response.data;
     },
-  })
+  });
   refetch();
   return (
     <nav className="bg-base-200 shadow-lg lg:px-20 md:px-10">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo and Site Name */}
         <div className="flex items-center gap-2">
-          <Link to="/" className="lg:text-3xl md:text-2xl text-lg text-nowrap font-bold text-primary">
+          <Link
+            to="/"
+            className="lg:text-3xl md:text-2xl text-lg text-nowrap font-bold text-primary"
+          >
             <img
               src={navbar}
               alt="Logo"
@@ -59,10 +95,14 @@ const Navbar = () => {
 
         {/* Notification Icon and Profile/Login */}
         <div className="flex items-center gap-4">
+          {navOption}
+
           {/* Notification Icon */}
           <button className="btn relative btn-ghost btn-circle">
             <FiBell className="lg:text-3xl md:text-2xl text-xl text-neutral" />
-            <span className="absolute right-0 top-0 px-0.5 bg-purple-800 text-white md:px-1 rounded-full">{allParcel.length}</span>
+            <span className="absolute right-0 top-0 px-0.5 bg-purple-800 text-white md:px-1 rounded-full">
+              {allParcel.length}
+            </span>
           </button>
 
           {user ? (
@@ -105,11 +145,29 @@ const Navbar = () => {
                     </p>
                   </div>
                   <div className="divider"></div>
-                  { isAdmin && user &&(<li className="text-xl"><Link to='/dashboard/statistics'><MdDashboardCustomize /> Dashboard</Link></li>)}
+                  {isAdmin && user && (
+                    <li className="text-xl">
+                      <Link to="/dashboard/statistics">
+                        <MdDashboardCustomize /> Dashboard
+                      </Link>
+                    </li>
+                  )}
 
-                  { user && !isAdmin && !isDelivery && (<li className="text-xl"><Link to='/dashboard/myParcel'><MdDashboardCustomize /> Dashboard</Link></li>)}
+                  {user && !isAdmin && !isDelivery && (
+                    <li className="text-xl">
+                      <Link to="/dashboard/myParcel">
+                        <MdDashboardCustomize /> Dashboard
+                      </Link>
+                    </li>
+                  )}
 
-                  { isDelivery && !isAdmin && user && (<li className="text-xl"><Link to='/dashboard/myDeliveryList'><MdDashboardCustomize /> Dashboard</Link></li>)}
+                  {isDelivery && !isAdmin && user && (
+                    <li className="text-xl">
+                      <Link to="/dashboard/myDeliveryList">
+                        <MdDashboardCustomize /> Dashboard
+                      </Link>
+                    </li>
+                  )}
                   <div className="lg:p-4 md:p-2 p-1 md:mx-8 mt-2">
                     <button
                       onClick={handleSignOut}
@@ -123,7 +181,7 @@ const Navbar = () => {
             </div>
           ) : (
             <Link to="/signin" className="btn btn-primary">
-            Sign In
+              Sign In
             </Link>
           )}
         </div>

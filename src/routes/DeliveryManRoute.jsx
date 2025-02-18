@@ -3,6 +3,7 @@
 import useAuth from '../hooks/useAuth';
 import { Navigate, useLocation } from 'react-router-dom';
 import useDeliveryMan from '../hooks/useDeliveryMan';
+import DeadlineLoading from '../components/DeadlineLoading';
 
 const DeliveryManRoute = ({children}) => {
       const { loading } = useAuth();
@@ -10,7 +11,7 @@ const DeliveryManRoute = ({children}) => {
     
       const location = useLocation()
     
-      if (loading || isDeliveryManLoading) return (<div className='flex items-center justify-center w-full min-h-[calc(100vh-305px)]'><span className="loading loading-ring w-32 "></span></div>)
+      if (loading || isDeliveryManLoading) return (<DeadlineLoading></DeadlineLoading>)
       if (isDeliveryMan) return children
       return <Navigate to='/login' state={location.pathname} replace></Navigate>
      

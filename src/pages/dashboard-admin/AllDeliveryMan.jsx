@@ -1,8 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
+
 
 const AllDeliveryMan = () => {
   const axiosSecure = useAxiosSecure();
+
   const { data: allDeliveryMan = [] } = useQuery({
     queryKey: ["deliveryMen"],
     queryFn: async () => {
@@ -12,6 +15,9 @@ const AllDeliveryMan = () => {
   });
   return (
     <div className="lg:min-h-screen w-full">
+      <Helmet>
+        <title>All Delivery Man</title>
+      </Helmet>
       <h2 className="lg:text-5xl md:text-3xl lg:my-10 md:my-5 my-3 text-xl font-bold text-center">
         All Delivery Man
       </h2>
@@ -34,7 +40,7 @@ const AllDeliveryMan = () => {
                 <td>{deliveryMan?.name}</td>
                 <td>{deliveryMan?.phone}</td>
                 <td>{deliveryMan?.totalDeliver} Delivered</td>
-                <td>Review</td>
+                <td>{deliveryMan?.reviewCount} review</td>
               </tr>
             ))}
           </tbody>

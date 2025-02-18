@@ -7,7 +7,7 @@ const Banner = () => {
         className="bg-cover bg-center h-[500px] flex items-center justify-center"
         style={{ backgroundImage: `url(${BannerImg})` }}
       >
-        <div className="text-center px-4">
+        <div className="text-center container mx-auto  px-4">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
             Welcome to Parcel Manager
           </h1>

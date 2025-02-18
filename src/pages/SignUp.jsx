@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import Lottie from "lottie-react";
 import useAuth from "../hooks/useAuth";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import { Helmet } from "react-helmet-async";
 
 const SignUp = () => {
     const axiosPublic = useAxiosPublic();
@@ -28,6 +29,7 @@ const SignUp = () => {
             const userInfo = {
               name: data?.name,
               email: data?.email,
+              photo: data?.photoURL,
               phone: data?.phone,
               role: data?.userType,
             };
@@ -77,6 +79,9 @@ const SignUp = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Sign Up</title>
+      </Helmet>
       <div className="min-w-screen bg-gray-100 text-gray-900 flex justify-center">
         <div className="max-w-screen-xl m-0 sm:m-10 shadow sm:rounded-lg flex justify-center flex-1">
           <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
@@ -219,9 +224,8 @@ const SignUp = () => {
                         <option value="">Select user type</option>
                         <option value="User">User</option>
                         <option value="Delivery Man">Delivery Man</option>
-                        <option value="Admin">Admin</option>
                       </select>
-                      {errors.userType && (
+                      {errors.userType &&  (
                         <p className="text-red-500 text-sm mt-1">
                           {errors.userType.message}
                         </p>

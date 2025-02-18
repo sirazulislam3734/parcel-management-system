@@ -3,6 +3,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const AllParcels = () => {
     const axiosSecure = useAxiosSecure();
@@ -59,6 +60,9 @@ const AllParcels = () => {
   };
   return (
     <div className="max-w-7xl lg:min-h-screen mx-auto">
+      <Helmet>
+        <title>All Parcel Management</title>
+      </Helmet>
       <h2 className="text-3xl font-bold mb-5 text-center">All Parcels</h2>
 
       {/* Date Range Filter */}

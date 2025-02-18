@@ -5,13 +5,13 @@ import axios from "axios";
 
 // Create a new Axios instance with base URL
 const axiosSecure = axios.create({
-  baseURL: "parcel-management-system-server-tau.vercel.app",
+  baseURL: "https://parcel-management-system-server-tau.vercel.app",
 });
 
 const useAxiosSecure = () => {
 
-//   const navigate = useNavigate();
-//   const { signOutUser } = useAuth();
+  // const navigate = useNavigate();
+  // const { signOutUser } = useAuth();
 
   // Request interceptor
   axiosSecure.interceptors.request.use(

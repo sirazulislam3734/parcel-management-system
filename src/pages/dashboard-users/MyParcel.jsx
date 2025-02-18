@@ -6,7 +6,7 @@ import {
 } from "react-icons/ai";
 import { BiCommentDetail } from "react-icons/bi";
 import { MdPayment } from "react-icons/md";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import noData from "../../assets/noData.json";
 import { useQuery } from "@tanstack/react-query";
@@ -14,7 +14,7 @@ import Lottie from "lottie-react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
-
+import { Helmet } from "react-helmet-async";
 
 const MyParcel = () => {
   const { user } = useAuth();
@@ -22,7 +22,6 @@ const MyParcel = () => {
   const axiosPublic = useAxiosPublic();
   const [parcels, setParcels] = useState([]);
   const [filterStatus, setFilterStatus] = useState("all");
-
 
   // Fetch all parcels booked by the logged-in user
   const { data: parcelsData = [], refetch } = useQuery({
@@ -48,31 +47,29 @@ const MyParcel = () => {
     }
   };
 
-  
     const handleSubmit = e => {
-        e.preventDefault()
-
-        const form = e.target;
-        const rating = form.rating.value; 
-        const feedback = form.feedback.value; 
-        const review = {feedback : feedback, rating : parseInt(rating) ,clientName: user?.displayName, clientPhoto: user?.photoURL, id: parcels.deliveryMenId }
-        axiosPublic.post('/reviewPost', review)
-        .then(res => {
-            console.log(res.data);
-            if(res.data?.insertedId){
-                refetch()
-                e.target.reset()
-                Swal.fire({
-                    title: "Good job!",
-                    text: "Review Send successfully!",
-                    icon: "success",
-                  });
-                  e.target.reset()
-            }
-        })
-    }
+      e.preventDefault()
+      const form = e?.target;
+      const rating = form?.rating?.value;
+      const feedback = form?.feedback?.value;
+      const review = {feedback : feedback, rating : parseInt(rating) ,clientName: user?.displayName, email: user?.email, clientPhoto: user?.photoURL }
+      console.log(review);
+      axiosPublic.post('/reviewPost', review)
+      .then(res => {
+          console.log(res?.data);
+          if(res.data?.insertedId){
+              refetch()
+              Swal.fire({
+                  title: "Good job!",
+                  text: "Review Send successfully!",
+                  icon: "success",
+                });
+          }
+      })
+  }
 
   // Filter parcels by status
+
   const filteredParcels =
     filterStatus === "all"
       ? parcels
@@ -80,6 +77,9 @@ const MyParcel = () => {
 
   return (
     <div className="max-w-6xl lg:min-h-screen mx-auto p-5">
+      <Helmet>
+        <title>My Parcel</title>
+      </Helmet>
       <h2 className="lg:text-5xl md:text-3xl text-xl font-bold text-center ">
         My Parcels
       </h2>
@@ -196,55 +196,52 @@ const MyParcel = () => {
                     <button
                       className="btn btn-sm btn-accent flex items-center gap-1"
                       onClick={() =>
-                      {
-                        document.getElementById("my_modal_2").showModal()
-
-                      }
+                        document.getElementById("my_modal_1").showModal()
                       }
                     >
                       <BiCommentDetail /> Review
                     </button>
                   )}
                   {/* Open the modal using document.getElementById('ID').showModal() method */}
-                  <dialog id="my_modal_2" className="modal">
-                  <div className="modal-box mx-auto">
-                     <h2 className="text-center lg:text-3xl md:text-2xl text-xl font-bold">Review Now</h2>
-                    <form 
-                    onSubmit={() =>  handleSubmit(parcel)} 
-                    className="flex flex-col gap-5">
-                      <fieldset className="fieldset">
-                        <legend className="fieldset-legend">
-                          Rating Now?
-                        </legend>
-                        <input
-                          type="number"
-                          className="input w-full"
-                          placeholder="Type here"
-                          name="rating"
-                        />
-                        
-                      </fieldset>
-                      <fieldset className="fieldset">
-                        <legend className="fieldset-legend">Feedback</legend>
-                        <textarea
-                          className="textarea w-full h-24"
-                          placeholder="Bio"
-                          name="feedback"
-                        ></textarea>
-                        
-                      </fieldset>
-                      <button className="text-center btn btn-primary">Submit</button>
-                    </form>
+                  <dialog id="my_modal_1" className="modal">
+                    <div className="modal-box">
+                      <form method="dialog">
+                        {/* if there is a button in form, it will close the modal */}
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                          ✕
+                        </button>
+                      </form>
+                      <h2 className="md:text-3xl text-2xl text-center font-bold">Review Now</h2>
+                      <form onSubmit={handleSubmit} className="space-y-3">
+                        <fieldset className="fieldset">
+                          <legend className="fieldset-legend">
+                            Please Rating?
+                          </legend>
+                          <input
+                            type="text"
+                            className="input w-full"
+                            placeholder="Rating here"
+                            name="rating"
+                          />
+                        </fieldset>
+                        <fieldset className="fieldset">
+                          <legend className="fieldset-legend">Feedback</legend>
+                          <textarea
+                            className="textarea w-full h-24"
+                            placeholder="feedback here"
+                            name="feedback"
+                          ></textarea>
+                        </fieldset>
+                        <button className="btn btn-primary w-full">Submit</button>
+                      </form>
                     </div>
                   </dialog>
 
                   {/* Pay Button */}
                   <Link to={`/dashboard/paymentCreate/${parcel._id}`}>
-                  <button
-                    className="btn btn-sm btn-success flex items-center gap-1"
-                  >
-                    <MdPayment /> Pay
-                  </button>
+                    <button className="btn btn-sm btn-success flex items-center gap-1">
+                      <MdPayment /> Pay
+                    </button>
                   </Link>
                 </td>
               </tr>

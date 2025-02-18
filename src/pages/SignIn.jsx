@@ -9,6 +9,7 @@ import signInImg from "../assets/signIn.json";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
 import Lottie from "lottie-react";
+import { Helmet } from "react-helmet-async";
 
 const SignIn = () => {
   const { singInUser, signInGoogle } = useContext(AuthContext);
@@ -77,6 +78,9 @@ const SignIn = () => {
   };
   return (
     <div className="">
+      <Helmet>
+        <title>Sign In</title>
+      </Helmet>
       <div className="min-w-screen items-center text-gray-900 flex justify-center">
         <div className="max-w-screen-xl flex-row-reverse m-0 sm:m-10 items-center shadow sm:rounded-lg flex justify-center flex-1">
           <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">

@@ -3,13 +3,14 @@ import { useQuery } from "@tanstack/react-query";
 import { HiUserGroup } from "react-icons/hi2";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const UserAndDelivery = () => {
     const axiosSecure = useAxiosSecure();
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/allUser");
+      const res = await axiosSecure.get("/users");
       return res.data;
     },
   });
@@ -44,6 +45,9 @@ const UserAndDelivery = () => {
 
   return (
     <div className="lg:min-h-screen">
+      <Helmet>
+        <title>All Users and Delivery</title>
+      </Helmet>
       <h2 className="lg:text-5xl md:text-3xl lg:my-10 md:my-5 my-3 text-xl font-bold text-center">All Users</h2>
       <div className="overflow-x-auto ">
         <table className="table table-zebra w-full">
@@ -75,7 +79,7 @@ const UserAndDelivery = () => {
                   ) : (
                     <button
                       onClick={() => handleMakeDeliveryMan(user)}
-                      className="p-3 rounded-xl"
+                      className="rounded-xl"
                     //   disabled={}
                     >
                       <HiUserGroup size={25} />

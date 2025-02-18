@@ -22,12 +22,12 @@ const FeatureSection = () => {
 
   return (
     <section className="bg-base-200 py-12 lg:px-20 md:px-10">
-      <div className="container mx-auto px-4 text-center">
+      <div className="container mx-auto text-center">
         <h2 className="text-3xl md:text-4xl font-bold text-neutral mb-4">
           Our Features
         </h2>
         <p className="text-sm md:text-lg text-center font-normal lg:mb-3 mb-1 lg:w-3/5 mx-auto">Why choose our parcel delivery service?</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {features.map((feature, index) => (
             <div
               key={index}

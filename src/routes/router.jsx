@@ -11,6 +11,7 @@ import UserAndDelivery from "../pages/dashboard-admin/UserAndDelivery";
 import MyParcel from "../pages/dashboard-users/MyParcel";
 import MyProfile from "../pages/dashboard-users/MyProfile";
 import AdminRoute from "./AdminRoute";
+import PrivateRoute from "./PrivateRoute";
 import UpdateMyParcel from "../pages/dashboard-users/UpdateMyParcel";
 import AllDeliveryMan from "../pages/dashboard-admin/AllDeliveryMan";
 import DeliveryManRoute from "./DeliveryManRoute";
@@ -48,20 +49,20 @@ export const router = createBrowserRouter([
       children: [
         {
           path: 'parcel',
-          element: <BookAParcel></BookAParcel>
+          element: <PrivateRoute><BookAParcel></BookAParcel></PrivateRoute>
         },
         {
           path: 'myParcel',
-          element: <MyParcel />
+          element: <PrivateRoute><MyParcel /></PrivateRoute>
         },
         {
           path: 'updateParcel/:id',
-          element: <UpdateMyParcel />,
-          // loader: ({params}) => fetch(`parcel-management-system-server-tau.vercel.app/bookAParcel/${params.id}`)
+          element: <PrivateRoute><UpdateMyParcel /></PrivateRoute>,
+          // loader: ({params}) => fetch(`http://parcel-management-system-server-tau.vercel.app/bookAParcel/${params.id}`)
         },
         {
           path: 'myProfile',
-          element: <MyProfile />
+          element: <PrivateRoute><MyProfile /></PrivateRoute>
         },
         {
           path: 'updateProfile',

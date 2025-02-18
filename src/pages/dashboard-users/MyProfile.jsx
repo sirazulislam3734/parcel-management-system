@@ -2,6 +2,7 @@
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const MyProfile = () => {
   const { user } = useAuth();
@@ -18,6 +19,9 @@ const MyProfile = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-6">
+      <Helmet>
+        <title>My Profile</title>
+      </Helmet>
       <h1 className="text-3xl font-semibold mb-6 text-center">My Profile</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="bg-white shadow-xl rounded-lg p-6">

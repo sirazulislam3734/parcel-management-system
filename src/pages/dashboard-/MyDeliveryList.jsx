@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const MyDeliveryList = () => {
   const { user } = useAuth();
@@ -59,7 +60,7 @@ const MyDeliveryList = () => {
       if (result.isConfirmed) {
         await axiosSecure
           .patch(`/deliveryParcelDeliver/${deliveryId?.Id}`, {
-            status: "Delivered", email: user?.email , bookingUserId: deliveryId?._id
+            status: "Delivered", email: user?.email , bookingUserId: deliveryId?._id, name: user?.displayName, photo: user?.photoURL
           })
           .then((res) => {
             console.log("Delivery has been Deliver.", res.data);
@@ -78,6 +79,9 @@ const MyDeliveryList = () => {
 
   return (
     <div className="space-y-6 lg:min-h-screen mx-auto">
+      <Helmet>
+        <title>My Delivery</title>
+      </Helmet>
       <h2 className="lg:text-5xl md:text-3xl text-xl text-center lg:my-10 md:my-5 my-2 font-bold">
         My Delivery List
       </h2>

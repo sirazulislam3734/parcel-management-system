@@ -8,6 +8,7 @@ import SectionTitle from "../../components/SectionTitle";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const BookAParcel = () => {
   const axiosPublic = useAxiosPublic();
@@ -23,8 +24,6 @@ const BookAParcel = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
-    
     const bookingData = { ...data, status: "pending", price: price, bookingDate: new Date().toLocaleDateString()};
     try {
       const res = await axiosPublic.post("/bookAParcelPost", bookingData);
@@ -61,6 +60,9 @@ const BookAParcel = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Book a Parcel</title>
+      </Helmet>
       <SectionTitle
         subTitle="---How many??---"
         heading="Book A Parcel"

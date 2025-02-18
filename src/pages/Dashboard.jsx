@@ -9,6 +9,7 @@ import useDeliveryMan from "../hooks/useDeliveryMan";
 import logo from "../assets/images-removebg-preview.png";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 
 const Dashboard = () => {
     const navigate = useNavigate()
@@ -35,7 +36,10 @@ const Dashboard = () => {
         });
     };
   return (
-    <div className="container mx-auto">
+    <div className="">
+      <Helmet>
+        <title>Dashboard</title>
+      </Helmet>
       <div className="flex flex-col md:flex-row ">
         {/**Dashboard side bar */}
         <div className="w-full md:w-64 bg-blue-600 text-white flex flex-col justify-between">
