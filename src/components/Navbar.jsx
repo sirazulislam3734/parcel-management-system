@@ -13,7 +13,7 @@ import navbar from "../assets/images-removebg-preview.png";
 
 const Navbar = () => {
   const navOption = (
-    <ul className="list-none flex items-center gap-5">
+    <ul className="list-none lg:flex text-left items-center gap-5">
       <li>
         <a
           className="relative inline-block cursor-pointer select-none overflow-hidden whitespace-nowrap rounded p-2 text-center align-middle text-xs font-medium leading-5 tracking-wide text-slate-800 transition duration-300 ease-linear hover:text-blue-700 hover:shadow-2xl hover:shadow-blue-600"
@@ -84,37 +84,43 @@ const Navbar = () => {
     <nav className="bg-base-200 shadow-lg px-4 py-3">
       <div className="container mx-auto flex justify-between items-center">
         {/* Mobile view: Menu toggle */}
-        <div className="md:hidden flex items-center flex-row-reverse">
-          <button className="btn btn-ghost btn-circle">
-            <FiBell className="text-xl text-neutral" />
-          </button>
-          <button className="btn btn-ghost">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+        <div className="navbar-start">
+          <div className="dropdown">
+            <div tabIndex={0} role="button" className="btn btn-ghost mr-2 lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                {" "}
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />{" "}
+              </svg>
+            </div>
+            <ul
+              tabIndex={0}
+              class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16m-7 6h7"
+              {navOption}
+            </ul>
+          </div>
+          {/* Logo and Site Name */}
+          <div className="flex items-center gap-2">
+            <Link to="/" className="text-lg md:text-2xl font-bold text-primary">
+              <img
+                src={navbar}
+                alt="Logo"
+                className="w-8 h-8 md:w-16 md:h-16 inline-block mr-2"
               />
-            </svg>
-          </button>
-        </div>
-        {/* Logo and Site Name */}
-        <div className="flex items-center gap-2">
-          <Link to="/" className="text-lg md:text-2xl font-bold text-primary">
-            <img
-              src={navbar}
-              alt="Logo"
-              className="w-8 h-8 md:w-16 md:h-16 inline-block mr-2"
-            />
-            Parcel Manager
-          </Link>
+              Parcel Manager
+            </Link>
+          </div>
         </div>
 
         {/* Notification Icon and Profile/Login */}
@@ -124,7 +130,7 @@ const Navbar = () => {
 
           {/* Notification Icon */}
           <button className="btn relative btn-ghost btn-circle hidden md:block">
-            <FiBell className="text-xl text-neutral" />
+            <FiBell className="text-xl" />
             <span className="absolute right-0 top-0 px-0.5 bg-purple-800 text-white rounded-full text-xs">
               {allParcel.length}
             </span>
