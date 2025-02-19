@@ -8,6 +8,7 @@ import TopDeliveryMen from "../components/TopDeliveryMen";
 import AboutSection from "./AboutSection";
 import ServiceSection from "./ServiceSection";
 import ContactSection from "./ContactSection";
+import NewsletterSection from "../components/NewsletterSection";
 
 
 const Home = () => {
@@ -24,6 +25,7 @@ const Home = () => {
             <AppStatistics></AppStatistics>
             <TopDeliveryMen></TopDeliveryMen>
             <ContactSection></ContactSection>
+            <NewsletterSection></NewsletterSection>
             <Footer></Footer>
         </div>
     );

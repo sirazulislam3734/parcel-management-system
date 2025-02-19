@@ -80,7 +80,7 @@ const Navbar = () => {
   refetch();
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-base-200 shadow-lg px-4 py-3 z-50">
+    <nav className="fixed top-0 left-0 w-full shadow-lg p-4 lg:px-20 bg-base-200 md:px-10 z-50">
       <div className="container mx-auto flex justify-between items-center">
         {/* Mobile view: Menu toggle */}
         <div className="navbar-start">
