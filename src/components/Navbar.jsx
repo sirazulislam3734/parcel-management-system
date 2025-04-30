@@ -15,7 +15,7 @@ const Navbar = () => {
     <ul className="list-none lg:flex text-left items-center gap-5">
       <li>
         <a
-          className="relative inline-block cursor-pointer select-none overflow-hidden whitespace-nowrap rounded p-2 text-center align-middle text-xs font-medium leading-5 tracking-wide text-slate-800 transition duration-300 ease-linear hover:text-blue-700 hover:shadow-2xl hover:shadow-blue-600"
+          className="relative inline-block cursor-pointer select-none overflow-hidden whitespace-nowrap rounded p-2 text-center align-middle text-xs font-medium leading-5 tracking-wide text-slate-800 transition duration-300 ease-linear hover:text-blue-700 hover:shadow-2xl "
           href="/"
         >
           <span className="text-sm md:text-xl">Home</span>
@@ -23,7 +23,7 @@ const Navbar = () => {
       </li>
       <li>
         <a
-          className="relative inline-block cursor-pointer select-none overflow-hidden whitespace-nowrap rounded p-2 text-center align-middle text-xs font-medium leading-5 tracking-wide text-slate-800 transition duration-300 ease-linear hover:text-blue-700 hover:shadow-2xl hover:shadow-blue-600"
+          className="relative inline-block cursor-pointer select-none overflow-hidden whitespace-nowrap rounded p-2 text-center align-middle text-xs font-medium leading-5 tracking-wide text-slate-800 transition duration-300 ease-linear hover:text-blue-700 hover:shadow-2xl "
           href="#about"
         >
           <span className="text-sm md:text-xl">About Us</span>
@@ -31,7 +31,7 @@ const Navbar = () => {
       </li>
       <li>
         <a
-          className="relative inline-block cursor-pointer select-none overflow-hidden whitespace-nowrap rounded p-2 text-center align-middle text-xs font-medium leading-5 tracking-wide text-slate-800 transition duration-300 ease-linear hover:text-blue-700 hover:shadow-2xl hover:shadow-blue-600"
+          className="relative inline-block cursor-pointer select-none overflow-hidden whitespace-nowrap rounded p-2 text-center align-middle text-xs font-medium leading-5 tracking-wide text-slate-800 transition duration-300 ease-linear hover:text-blue-700 hover:shadow-2xl "
           href="#service"
         >
           <span className="text-sm md:text-xl">Service</span>
@@ -39,7 +39,7 @@ const Navbar = () => {
       </li>
       <li>
         <a
-          className="relative inline-block cursor-pointer select-none overflow-hidden whitespace-nowrap rounded p-2 text-center align-middle text-xs font-medium leading-5 tracking-wide text-slate-800 transition duration-300 ease-linear hover:text-primary hover:shadow-2xl hover:shadow-blue-600"
+          className="relative inline-block cursor-pointer select-none overflow-hidden whitespace-nowrap rounded p-2 text-center align-middle text-xs font-medium leading-5 tracking-wide text-slate-800 transition duration-300 ease-linear hover:text-primary hover:shadow-2xl "
           href="#contact"
         >
           <span className="text-sm md:text-xl">Contact Us</span>

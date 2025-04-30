@@ -18,3 +18,11 @@ const DeliveryManRoute = ({children}) => {
 };
 
 export default DeliveryManRoute;
+
+// const navLinks = [
+//       { path: "/", name: "Home", icon: <FiHome /> },
+//       { path: "/shop", name: "Shop", icon: <FiShoppingCart /> },
+//       { path: "/all-gadgets", name: "All Gadgets", icon: <FiGrid /> },
+//       { path: "/about-us", name: "About", icon: <FiInfo /> },
+//       { path: "/contact-us", name: "Contact", icon: <FiPhone /> },
+//     ];

@@ -6,28 +6,27 @@ import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
 
 const AllParcels = () => {
-    const axiosSecure = useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
   const [parcels, setParcels] = useState([]);
   const [selectedParcel, setSelectedParcel] = useState(null);
   const [dateRange, setDateRange] = useState({ from: "", to: "" });
+  const [sortCriteria, setSortCriteria] = useState({ field: "bookingDate", order: "asc" });
 
-  const {data : allParcel = [], refetch } = useQuery({
-        queryKey: ["parcels"],
-        queryFn: async () => {
-          const response = await axiosSecure.get("/bookAParcel");
-          return response.data;
-        },
-  })
+  const { data: allParcel = [], refetch } = useQuery({
+    queryKey: ["parcels"],
+    queryFn: async () => {
+      const response = await axiosSecure.get("/bookAParcel");
+      return response.data;
+    },
+  });
 
-      const {data : allDeliveryMan = []} = useQuery({
-        queryKey: ["deliveryMen"],
-        queryFn: async () => {
-          const res = await axiosSecure.get("/allDeliveryMan");
-          return res.data;
-        },
-      })
-
-   
+  const { data: allDeliveryMan = [] } = useQuery({
+    queryKey: ["deliveryMen"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/allDeliveryMan");
+      return res.data;
+    },
+  });
 
   const handleAssignDelivery = async () => {
     try {
@@ -40,10 +39,10 @@ const AllParcels = () => {
       });
       refetch(); // Refresh parcels
       Swal.fire({
-                title: "Good job!",
-                text: "Parcel assigned successfully!",
-                icon: "success",
-              });
+        title: "Good job!",
+        text: "Parcel assigned successfully!",
+        icon: "success",
+      });
       setSelectedParcel(null); // Close modal
     } catch (error) {
       console.error("Error assigning delivery:", error);
@@ -55,9 +54,43 @@ const AllParcels = () => {
       const response = await axiosSecure.get(`/bookAParcel?from=${dateRange.from}&to=${dateRange.to}`);
       setParcels(response.data);
     } catch (error) {
-      console.error("Error fetching parcels by date:",parcels, error);
+      console.error("Error fetching parcels by date:", parcels, error);
     }
   };
+
+  // সর্টিং ক্রাইটেরিয়া পরিবর্তন করার ফাংশন
+  const handleSortChange = (field) => {
+    if (sortCriteria.field === field) {
+      setSortCriteria({ field, order: sortCriteria.order === "asc" ? "desc" : "asc" });
+    } else {
+      setSortCriteria({ field, order: "asc" });
+    }
+  };
+
+  // ডাইনামিক সর্টিং ফাংশন
+  const sortedParcels = allParcel.sort((a, b) => {
+    if (sortCriteria.field === "bookingDate" || sortCriteria.field === "deliveryDate") {
+      const dateA = new Date(a[sortCriteria.field]);
+      const dateB = new Date(b[sortCriteria.field]);
+
+      if (sortCriteria.order === "asc") {
+        return dateA - dateB;
+      } else {
+        return dateB - dateA;
+      }
+    } else {
+      if (sortCriteria.order === "asc") {
+        if (a[sortCriteria.field] < b[sortCriteria.field]) return -1;
+        if (a[sortCriteria.field] > b[sortCriteria.field]) return 1;
+        return 0;
+      } else {
+        if (a[sortCriteria.field] < b[sortCriteria.field]) return 1;
+        if (a[sortCriteria.field] > b[sortCriteria.field]) return -1;
+        return 0;
+      }
+    }
+  });
+
   return (
     <div className="max-w-7xl lg:min-h-screen mx-auto">
       <Helmet>
@@ -89,17 +122,59 @@ const AllParcels = () => {
         <table className="table table-zebra w-full">
           <thead className="bg-slate-800 text-white">
             <tr>
-              <th>User Name</th>
-              <th>User Phone</th>
-              <th>Booking Date</th>
-              <th>Requested Delivery Date</th>
-              <th>Cost</th>
-              <th>Status</th>
+              <th onClick={() => handleSortChange("name")}>
+                User Name{" "}
+                {sortCriteria.field === "name" && (
+                  <span>
+                    {sortCriteria.order === "asc" ? "↑" : "↓"}
+                  </span>
+                )}
+              </th>
+              <th onClick={() => handleSortChange("phone")}>
+                User Phone{" "}
+                {sortCriteria.field === "phone" && (
+                  <span>
+                    {sortCriteria.order === "asc" ? "↑" : "↓"}
+                  </span>
+                )}
+              </th>
+              <th onClick={() => handleSortChange("bookingDate")}>
+                Booking Date{" "}
+                {sortCriteria.field === "bookingDate" && (
+                  <span>
+                    {sortCriteria.order === "asc" ? "↑" : "↓"}
+                  </span>
+                )}
+              </th>
+              <th onClick={() => handleSortChange("deliveryDate")}>
+                Requested Delivery Date{" "}
+                {sortCriteria.field === "deliveryDate" && (
+                  <span>
+                    {sortCriteria.order === "asc" ? "↑" : "↓"}
+                  </span>
+                )}
+              </th>
+              <th onClick={() => handleSortChange("price")}>
+                Cost{" "}
+                {sortCriteria.field === "price" && (
+                  <span>
+                    {sortCriteria.order === "asc" ? "↑" : "↓"}
+                  </span>
+                )}
+              </th>
+              <th onClick={() => handleSortChange("status")}>
+                Status{" "}
+                {sortCriteria.field === "status" && (
+                  <span>
+                    {sortCriteria.order === "asc" ? "↑" : "↓"}
+                  </span>
+                )}
+              </th>
               <th>Manage</th>
             </tr>
           </thead>
           <tbody>
-            {allParcel.map((parcel) => (
+            {sortedParcels.map((parcel) => (
               <tr key={parcel._id}>
                 <td>{parcel.name}</td>
                 <td>{parcel.phone}</td>
@@ -107,7 +182,9 @@ const AllParcels = () => {
                 <td>{new Date(parcel.deliveryDate).toLocaleDateString()}</td>
                 <td>{parcel.price} Tk</td>
                 <td>
-                  <span className={`badge ${parcel.status === "pending"?'bg-yellow-100 border border-yellow-500 rounded-full p-3':"badge-ghost"} ${parcel.status === "On The Way" ? "bg-slate-200 md:text-nowrap border border-black rounded-full p-3" : "badge-ghost"}`}>
+                  <span
+                    className={`badge ${parcel.status === "pending" ? "bg-yellow-100 border border-yellow-500 rounded-full p-3" : "badge-ghost"} ${parcel.status === "On The Way" ? "bg-slate-200 md:text-nowrap border border-black rounded-full p-3" : "badge-ghost"}`}
+                  >
                     {parcel.status}
                   </span>
                 </td>
@@ -159,12 +236,10 @@ const AllParcels = () => {
               />
             </div>
             <div className="modal-action">
-              <button className="btn btn-primary" 
-              onClick={() => handleAssignDelivery()}>
+              <button className="btn btn-primary" onClick={() => handleAssignDelivery()}>
                 Assign
               </button>
-              <button className="btn" 
-              onClick={() => setSelectedParcel(null)}>
+              <button className="btn" onClick={() => setSelectedParcel(null)}>
                 Cancel
               </button>
             </div>

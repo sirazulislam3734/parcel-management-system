@@ -13,7 +13,7 @@ import NewsletterSection from "../components/NewsletterSection";
 
 const Home = () => {
     return (
-        <div>
+        <div data-theme="">
             <Helmet>
                 <title>Home || Parcel Management</title>
             </Helmet>
