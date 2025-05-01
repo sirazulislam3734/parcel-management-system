@@ -14,7 +14,7 @@ const TopDeliveryMen = () => {
   });
 
   return (
-    <div className="p-4 mx-auto lg:px-20 bg-base-200 md:px-10 lg:py-10 md:py-5">
+    <div className="p-4 mx-auto lg:px-24 bg-base-200 md:px-12 lg:py-10 md:py-5">
       <div className="container mx-auto">
         {/* Title Animation */}
         <motion.h2
