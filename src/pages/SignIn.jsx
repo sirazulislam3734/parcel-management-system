@@ -81,7 +81,7 @@ const SignIn = () => {
       <Helmet>
         <title>Sign In</title>
       </Helmet>
-      <div className="min-w-screen items-center text-gray-900 flex justify-center">
+      <div className="min-w-screen lg:min-h-screen items-center text-gray-900 flex justify-center">
         <div className="max-w-screen-xl flex-row-reverse m-0 sm:m-10 items-center shadow sm:rounded-lg flex justify-center flex-1">
           <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
             <div className="mt-12 flex flex-col items-center">

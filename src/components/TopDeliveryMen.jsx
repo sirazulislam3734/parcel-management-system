@@ -18,7 +18,7 @@ const TopDeliveryMen = () => {
       <div className="container mx-auto">
         {/* Title Animation */}
         <motion.h2
-          className="md:text-3xl text-2xl font-bold text-center mb-4 lg:text-4xl"
+          className="md:text-3xl text-2xl font-bold text-center mb-4 lg:text-5xl"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
