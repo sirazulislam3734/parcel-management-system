@@ -18,14 +18,14 @@ const Dashboard = () => {
   const [isDelivery] = useDeliveryMan();
 
   const handleSignOut = () => {
-      signOutUser()
+      signOutUser();
         .then(() => {
           Swal.fire({
             title: "success!",
             text: "User Log out successfully!",
             icon: "success",
           });
-          navigate('/')
+          navigate('/');
         })
         .catch((error) => {
           Swal.fire({
