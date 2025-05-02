@@ -18,14 +18,23 @@ const Home = () => {
                 <title>Home || Parcel Management</title>
             </Helmet>
             <Navbar></Navbar>
+
             <Banner></Banner>
+
             <FeatureSection></FeatureSection>
+
             <AboutSection></AboutSection>
+
             <ServiceSection></ServiceSection>
+
             <AppStatistics></AppStatistics>
+
             <TopDeliveryMen></TopDeliveryMen>
+
             <ContactSection></ContactSection>
+
             <NewsletterSection></NewsletterSection>
+            
             <Footer></Footer>
         </div>
     );
