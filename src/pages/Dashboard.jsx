@@ -18,7 +18,7 @@ const Dashboard = () => {
   const [isDelivery] = useDeliveryMan();
 
   const handleSignOut = () => {
-      signOutUser();
+      signOutUser()
         .then(() => {
           Swal.fire({
             title: "success!",
